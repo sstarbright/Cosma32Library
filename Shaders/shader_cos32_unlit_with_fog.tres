@@ -2,7 +2,7 @@
 
 [resource]
 code = "shader_type spatial;
-render_mode vertex_lighting, shadows_disabled, blend_sub, specular_phong, diffuse_lambert;
+render_mode shadows_disabled, blend_mix, ambient_light_disabled;
 
 uniform vec4 modulate: hint_color = vec4(1,1,1,1);
 uniform sampler2D image_texture: hint_albedo;
@@ -14,6 +14,10 @@ uniform float alpha_scissor = 0;
 
 const float vertex_snapping_offset = 0.8;
 const vec2 resolution = vec2(640,480);
+
+void light() {
+	DIFFUSE_LIGHT = ALBEDO * 0.5;
+}
 
 vec4 fromLinear(vec4 linearRGB)
 {

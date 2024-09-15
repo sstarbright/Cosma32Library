@@ -20,6 +20,15 @@ varying vec2 BG_SCALE;
 
 const float PI = 3.14159265358979323846;
 
+vec4 fromLinear(vec4 linearRGB)
+{
+    bvec3 cutoff = lessThan(linearRGB.rgb, vec3(0.0031308));
+    vec3 higher = vec3(1.055)*pow(linearRGB.rgb, vec3(1.0/2.4)) - vec3(0.055);
+    vec3 lower = linearRGB.rgb * vec3(12.92);
+
+    return vec4(mix(higher, lower, cutoff), linearRGB.a);
+}
+
 void vertex() {
 	//Camera YX rotation per Basis.get_euler source code
 	float y = atan(CAMERA_MATRIX[0][2], CAMERA_MATRIX[2][2]);
@@ -36,6 +45,7 @@ void vertex() {
 	
 	//Keep background centered vertically when FOV changes
 	BG_COORDS.y *= BG_SCALE.y > 1.0 ? 0.0 : 1.0 - BG_SCALE.y;
+	COLOR.rgb = fromLinear(COLOR.rgba).rgb;
 }
 
 void fragment() {

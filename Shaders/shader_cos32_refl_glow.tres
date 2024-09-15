@@ -13,9 +13,16 @@ uniform vec2 uv_scrolling_velocity = vec2(0.0);
 uniform float alpha_scissor = 0;
 
 const float vertex_snapping_offset = 0.8;
-const vec2 resolution = vec2(480,360);
+const vec2 resolution = vec2(640,480);
 
-varying float vertex_distance;
+vec4 fromLinear(vec4 linearRGB)
+{
+    bvec3 cutoff = lessThan(linearRGB.rgb, vec3(0.0031308));
+    vec3 higher = vec3(1.055)*pow(linearRGB.rgb, vec3(1.0/2.4)) - vec3(0.055);
+    vec3 lower = linearRGB.rgb * vec3(12.92);
+
+    return vec4(mix(higher, lower, cutoff), linearRGB.a);
+}
 
 void vertex() {
     vec4 base_position = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
@@ -28,6 +35,7 @@ void vertex() {
 	
 	snapped_position.xyz *= base_position.w;
 	POSITION = snapped_position;
+	COLOR.rgb = fromLinear(COLOR.rgba).rgb;
 }
 
 void fragment() {
