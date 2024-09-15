@@ -6,7 +6,7 @@ render_mode unshaded, blend_sub;
 
 uniform vec4 modulate: hint_color = vec4(1,1,1,1);
 uniform sampler2D image_texture : hint_albedo;
-uniform vec2 image_size = vec2(64.64);
+uniform vec2 image_size = vec2(64,64);
 uniform bool lock_aspect = false;
 uniform float aspect_ratio = 1.3333333;
 uniform vec2 fov = vec2(180.0, 90.0);
