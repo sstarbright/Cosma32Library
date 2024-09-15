@@ -13,6 +13,7 @@ uniform vec2 fov = vec2(180.0, 90.0);
 uniform vec2 tiling = vec2(1, 1);
 uniform vec2 offset = vec2(0.0, 0.0);
 uniform vec2 scrolling_velocity = vec2(0.0);
+uniform float alpha_scissor = 0;
 
 varying vec2 BG_COORDS;
 varying vec2 BG_SCALE;
@@ -40,4 +41,5 @@ void vertex() {
 void fragment() {
 	vec4 filtered_tex = texture(image_texture, ((SCREEN_UV + vec2(-offset.x, offset.y)) * BG_SCALE + BG_COORDS + scrolling_velocity*TIME) * tiling) * modulate.rgba * COLOR.rgba;
 	ALBEDO = filtered_tex.rgb;
+    ALPHA_SCISSOR = alpha_scissor;
 }"
