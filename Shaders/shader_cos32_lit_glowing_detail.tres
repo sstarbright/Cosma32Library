@@ -2,10 +2,11 @@
 
 [resource]
 code = "shader_type spatial;
-render_mode vertex_lighting, shadows_disabled, blend_mix, unshaded;
+render_mode vertex_lighting, shadows_disabled, blend_mix, specular_phong, diffuse_lambert;
 
 uniform vec4 modulate: hint_color = vec4(1,1,1,1);
 uniform sampler2D image_texture: hint_albedo;
+uniform sampler2D emission_texture: hint_black;
 uniform vec2 image_size = vec2(64,64);
 uniform vec2 uv_scale = vec2(1.0);
 uniform vec2 uv_offset = vec2(0.0);
@@ -25,7 +26,7 @@ vec4 fromLinear(vec4 linearRGB)
 }
 
 void vertex() {
-    vec4 base_position = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
+	vec4 base_position = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
 	vec4 snapped_position = base_position;
 	snapped_position.xyz = base_position.xyz / base_position.w;
 	
@@ -39,10 +40,12 @@ void vertex() {
 }
 
 void fragment() {
-	vec2 reflected_uv = (vec2(NORMAL.x, -NORMAL.y) * uv_scale)+uv_offset + (uv_scrolling_velocity*TIME);
-	vec4 texture_sample = texture(image_texture, reflected_uv) * modulate.rgba * COLOR.rgba;
+	vec2 mod_uv = UV * uv_scale + uv_offset + (uv_scrolling_velocity*TIME);
+	vec4 texture_sample = texture(image_texture, mod_uv);
+	vec4 emissive_sample = texture(emission_texture, mod_uv);
 	
-    ALBEDO = texture_sample.rgb;
-    ALPHA = texture_sample.a;
+    ALBEDO = mix(COLOR.rgb, texture_sample.rgb, texture_sample.a) * modulate.rgb;
+	EMISSION = emissive_sample.rgb * emissive_sample.a;
+	ALPHA = COLOR.a*modulate.a;
     ALPHA_SCISSOR = alpha_scissor;
 }"

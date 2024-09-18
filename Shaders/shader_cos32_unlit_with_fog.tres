@@ -13,7 +13,7 @@ uniform vec2 uv_scrolling_velocity = vec2(0.0);
 uniform float alpha_scissor = 0;
 
 const float vertex_snapping_offset = 0.8;
-const vec2 resolution = vec2(800,600);
+const vec2 resolution = vec2(960,720);
 
 void light() {
 	DIFFUSE_LIGHT = ALBEDO * 0.5;
