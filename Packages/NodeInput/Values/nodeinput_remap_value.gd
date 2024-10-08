@@ -9,7 +9,7 @@ enum MapType {
 	MAP_MOVE
 }
 
-export(MapType) var map_type
+@export var map_type: MapType
 
 func _ready():
 	NodeInputRemap.load_map_as_sources(self, map_type)

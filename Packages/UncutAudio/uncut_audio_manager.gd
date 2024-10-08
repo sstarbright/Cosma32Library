@@ -5,14 +5,14 @@ const consume_time = 0.1
 var existing_streams = Dictionary()
 var audio_space_2d
 var audio_space_3d
-onready var random = RandomNumberGenerator.new()
+@onready var random = RandomNumberGenerator.new()
 
 func _ready():
 	random.randomize()
 	audio_space_2d = Node2D.new()
 	audio_space_2d.name = "AudioSpace2D"
 	get_node("/root").call_deferred("add_child", audio_space_2d)
-	audio_space_3d = Spatial.new()
+	audio_space_3d = Node3D.new()
 	audio_space_3d.name = "AudioSpace3D"
 	get_node("/root").call_deferred("add_child", audio_space_3d)
 
@@ -54,40 +54,39 @@ func play(stream, bus, low_pitch = 1.0, high_pitch = 1.0, volume = 0.0):
 
 func play_immediate(stream, bus, low_pitch = 1.0, high_pitch = 1.0, volume = 0.0):
 	var new_player = UncutAudioPlayer.new()
-	new_player.pause_mode = PAUSE_MODE_PROCESS
+	new_player.process_mode = PROCESS_MODE_ALWAYS
 	new_player.set_volume_db(volume)
 	new_player.bus = bus
 	new_player.autoplay = true
 	new_player.set_stream(stream)
-	new_player.pitch_scale = rand_range(low_pitch, high_pitch)
+	new_player.pitch_scale = randf_range(low_pitch, high_pitch)
 	new_player.mix_target = AudioStreamPlayer.MIX_TARGET_STEREO
 	add_child(new_player)
 
 func play2d(stream, bus, target, low_pitch = 1.0, high_pitch = 1.0, volume = 0.0, fade_speed = 1.0):
 	var new_player = UncutAudioPlayer2D.new()
-	new_player.pause_mode = PAUSE_MODE_PROCESS
+	new_player.process_mode = PROCESS_MODE_ALWAYS
 	new_player.set_volume_db(volume)
 	new_player.bus = bus
 	new_player.autoplay = true
 	new_player.set_stream(stream)
 	new_player.set_target(target)
 	new_player.fade_speed = fade_speed
-	new_player.pitch_scale = rand_range(low_pitch, high_pitch)
+	new_player.pitch_scale = randf_range(low_pitch, high_pitch)
 	new_player.panning_strength = 0.0
 	audio_space_2d.add_child(new_player)
 
 func play3d(stream, bus, target, low_pitch = 1.0, high_pitch = 1.0, distance = 50.0, volume = 0.0, fade_speed = 1.0):
 	var new_player = UncutAudioPlayer3D.new()
-	new_player.pause_mode = PAUSE_MODE_PROCESS 
+	new_player.process_mode = PROCESS_MODE_ALWAYS 
 	new_player.set_attenuation_filter_cutoff_hz(20500.0)
 	new_player.set_unit_size(distance)
-	new_player.set_unit_db(volume)
-	new_player.set_out_of_range_mode(AudioStreamPlayer3D.OUT_OF_RANGE_PAUSE)
+	new_player.set_volume_db(volume)
 	new_player.bus = bus
 	new_player.autoplay = true
 	new_player.set_stream(stream)
 	new_player.set_target(target)
 	new_player.fade_speed = fade_speed
-	new_player.pitch_scale = rand_range(low_pitch, high_pitch)
+	new_player.pitch_scale = randf_range(low_pitch, high_pitch)
 	new_player.panning_strength = 0.0
 	audio_space_3d.add_child(new_player)

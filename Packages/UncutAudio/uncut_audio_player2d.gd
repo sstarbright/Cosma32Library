@@ -10,7 +10,7 @@ var fade_pos = 0.0
 var start_db
 
 func _ready():
-	var _finished = connect("finished", self, "queue_free")
+	var _finished = connect("finished", Callable(self, "queue_free"))
 
 func audio_player_process(delta):
 	if !fade_out:
@@ -23,7 +23,7 @@ func audio_player_process(delta):
 		fade_pos += delta
 		if fade_pos >= fade_speed:
 			queue_free()
-		volume_db = linear2db(lerp(start_db, mute_db, fade_pos/fade_speed))
+		volume_db = linear_to_db(lerp(start_db, mute_db, fade_pos/fade_speed))
 
 func set_target(node):
 	if is_instance_valid(node):

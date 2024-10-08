@@ -1,0 +1,13 @@
+[gd_resource type="Shader" format=3 uid="uid://b4xq0e4w7qnyq"]
+
+[resource]
+code = "shader_type sky;
+render_mode disable_fog;
+
+uniform vec4 modulate: source_color = vec4(1,1,1,1);
+uniform sampler2D image_texture: source_color;
+
+void sky() {
+	COLOR = texture(image_texture, SCREEN_UV).rgb * modulate.rgb;
+}
+"

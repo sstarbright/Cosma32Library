@@ -1,5 +1,5 @@
 class_name NodeInputRemapObject
-extends Reference
+extends RefCounted
 
 var device_id
 var input_id

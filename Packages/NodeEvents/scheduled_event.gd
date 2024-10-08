@@ -1,8 +1,8 @@
 class_name ScheduledEvent
 extends Node
 
-export var wait_for_me = false
-export var complete = false
+@export var wait_for_me = false
+@export var complete = false
 var started = false
 
 func event_init():

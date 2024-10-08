@@ -1,7 +1,7 @@
 class_name InputVector
 extends InputValue
 
-export var length_limit = 1.0
+@export var length_limit = 1.0
 
 var collecting_half = false
 var collecting_half_index = 0

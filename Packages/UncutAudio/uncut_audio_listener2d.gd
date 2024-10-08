@@ -1,5 +1,5 @@
 class_name UncutAudioListener2D
-extends Listener2D
+extends AudioListener2D
 
 var target
 

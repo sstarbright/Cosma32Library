@@ -20,11 +20,11 @@ enum InputButtonID {
 	WHEEL_RIGHT = 7
 }
 
-export(InputButtonContribution) var contribution
+@export var contribution: InputButtonContribution
 var contribution_float = 1.0
 var contribution_vector = Vector2.UP
 var controller = 0
-export(InputButtonID) var button = InputButtonID.LEFT
+@export var button: InputButtonID = InputButtonID.LEFT
 
 func size():
 	return InputValueSize.HALF
@@ -39,7 +39,7 @@ func _ready():
 			contribution_vector = Vector2.DOWN
 		InputButtonContribution.LEFT:
 			contribution_vector = Vector2.LEFT
-		InputButtonContribution.Right:
+		InputButtonContribution.RIGHT:
 			contribution_vector = Vector2.RIGHT
 
 func raw():

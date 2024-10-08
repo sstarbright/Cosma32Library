@@ -2,8 +2,8 @@ class_name TimedEvent
 extends Node
 
 const wait_for_me = true
-export(float, 0.0, 86400.0) var time_to_complete = 0.0
-export var elapsed_time = 0.0
+@export var time_to_complete = 0.0 # (float, 0.0, 86400.0)
+@export var elapsed_time = 0.0
 var complete = false
 var started = false
 

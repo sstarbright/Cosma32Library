@@ -16,7 +16,7 @@ func _ready():
 	current = false
 
 func _physics_process(delta):
-	._physics_process(delta)
+	super._physics_process(delta)
 	down = false
 	up = false
 	for source in sources:

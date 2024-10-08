@@ -29,11 +29,11 @@ enum InputButtonID {
 	VR_TOP_BUTTON = 1,
 }
 
-export(InputButtonContribution) var contribution
+@export var contribution: InputButtonContribution
 var contribution_float = 1.0
 var contribution_vector = Vector2.UP
 var controller = 0
-export(InputButtonID) var button = InputButtonID.FACE_UP
+@export var button := JOY_BUTTON_A
 
 func size():
 	return InputValueSize.HALF

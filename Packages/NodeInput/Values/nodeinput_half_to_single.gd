@@ -1,5 +1,5 @@
 class_name InputHalfToSingle
-extends Reference
+extends RefCounted
 
 var pos
 var neg

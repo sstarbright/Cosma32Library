@@ -1,5 +1,5 @@
 class_name NodeInput4RemapObject
-extends Reference
+extends RefCounted
 
 var up_map
 var down_map

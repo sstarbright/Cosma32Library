@@ -1,26 +1,10 @@
 class_name InputAxis2
 extends InputSource
 
-enum InputAxisID {
-	LEFT_STICK_X,
-	LEFT_STICK_Y,
-	RIGHT_STICK_X,
-	RIGHT_STICK_Y,
-	AXIS_4,
-	AXIS_5,
-	TRIGGER_LEFT,
-	TRIGGER_RIGHT,
-	AXIS_8,
-	AXIS_9,
-	AXIS_10,
-	VR_TRIGGER = 2,
-	VR_GRIP = 4
-}
-
 var controller = 0
-export(InputAxisID) var x_axis = InputAxisID.LEFT_STICK_X
-export(InputAxisID) var y_axis = InputAxisID.LEFT_STICK_Y
-export(float, 0, 0.99, 0.01) var deadzone = 0.0
+@export var x_axis := JOY_AXIS_LEFT_X
+@export var y_axis := JOY_AXIS_LEFT_Y
+@export var deadzone = 0.0 # (float, 0, 0.99, 0.01)
 var deadzone_length_squared = 0.0
 var deadzone_length = 0.0
 var deadzone_ratio

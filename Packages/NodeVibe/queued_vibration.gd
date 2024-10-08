@@ -1,5 +1,5 @@
 class_name QueuedVibration
-extends Reference
+extends RefCounted
 
 var controller = 0
 var strength = 0.0

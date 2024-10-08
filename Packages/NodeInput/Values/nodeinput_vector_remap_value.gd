@@ -11,6 +11,7 @@ var collecting_single_index = 0
 var num_singles = 0
 
 func _ready():
+	super._ready()
 	var children = get_children()
 	for child in children:
 		if child is InputSource:

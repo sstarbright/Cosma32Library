@@ -1,5 +1,5 @@
 class_name InputHalfToDouble
-extends Reference
+extends RefCounted
 
 var x_pos
 var x_neg

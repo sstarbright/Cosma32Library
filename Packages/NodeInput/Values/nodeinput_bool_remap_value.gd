@@ -8,6 +8,7 @@ var down = false
 var up = false
 
 func _ready():
+	super._ready()
 	var children = get_children()
 	for child in children:
 		if child is InputSource:
@@ -16,7 +17,7 @@ func _ready():
 	current = false
 
 func _physics_process(delta):
-	._physics_process(delta)
+	super._physics_process(delta)
 	down = false
 	up = false
 	for source in sources:

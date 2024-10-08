@@ -1,18 +1,18 @@
 class_name PhysicsEventScheduler
 extends Node
 
-export var timing_speed = 1.0
+@export var timing_speed = 1.0
 
 var elapsed_time = 0.0
 var events = Array()
 var event_position = 0
 var current_event_position = 0
-export var skip_to = 0
-export var playing = true
+@export var skip_to = 0
+@export var playing = true
 
 func _ready():
-	var _added = connect("child_entered_tree", self, "child_added")
-	var _removed = connect("child_exiting_tree", self, "child_removed")
+	var _added = connect("child_entered_tree", Callable(self, "child_added"))
+	var _removed = connect("child_exiting_tree", Callable(self, "child_removed"))
 	var children = get_children()
 	for child in children:
 		if child is ScheduledEvent || child is TimedEvent:

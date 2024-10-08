@@ -1,5 +1,5 @@
 class_name InputSingleToDouble
-extends Reference
+extends RefCounted
 
 var x
 var y

@@ -6,6 +6,7 @@ var collecting_half_index = 0
 var num_halfs = 0
 
 func _ready():
+	super._ready()
 	var children = get_children()
 	for child in children:
 		if child is InputSource:

@@ -1,11 +1,11 @@
-[gd_resource type="Shader" format=2]
+[gd_resource type="Shader" format=3 uid="uid://cyopaomj8xq8"]
 
 [resource]
 code = "shader_type spatial;
-render_mode vertex_lighting, shadows_disabled, blend_mix, specular_phong, diffuse_lambert;
+render_mode vertex_lighting, shadows_disabled, blend_mix, diffuse_lambert;
 
-uniform vec4 modulate: hint_color = vec4(1,1,1,1);
-uniform sampler2D image_texture: hint_albedo;
+uniform vec4 modulate: source_color = vec4(1,1,1,1);
+uniform sampler2D image_texture: source_color;
 
 uniform vec2 image_size = vec2(64,64);
 uniform vec2 uv_scale = vec2(1.0);
@@ -16,34 +16,24 @@ uniform float alpha_scissor = 0;
 const float vertex_snapping_offset = 0.8;
 const vec2 resolution = vec2(960,720);
 
-vec4 fromLinear(vec4 linearRGB)
-{
-    bvec3 cutoff = lessThan(linearRGB.rgb, vec3(0.0031308));
-    vec3 higher = vec3(1.055)*pow(linearRGB.rgb, vec3(1.0/2.4)) - vec3(0.055);
-    vec3 lower = linearRGB.rgb * vec3(12.92);
-
-    return vec4(mix(higher, lower, cutoff), linearRGB.a);
-}
-
 void vertex() {
 	vec4 base_position = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
 	vec4 snapped_position = base_position;
 	snapped_position.xyz = base_position.xyz / base_position.w;
-	
+
 	vec2 snap_resolution = floor(resolution*(1.0 - vertex_snapping_offset));
 	snapped_position.x = floor(snap_resolution.x * snapped_position.x) / snap_resolution.x;
 	snapped_position.y = floor(snap_resolution.y * snapped_position.y) / snap_resolution.y;
-	
+
 	snapped_position.xyz *= base_position.w;
 	POSITION = snapped_position;
-	COLOR.rgb = fromLinear(COLOR.rgba).rgb;
 }
 
 void fragment() {
 	vec2 mod_uv = UV * uv_scale + uv_offset + (uv_scrolling_velocity*TIME);
 	vec4 texture_sample = texture(image_texture, mod_uv);
-	
+
     ALBEDO = mix(COLOR.rgb, texture_sample.rgb, texture_sample.a) * modulate.rgb;
-	ALPHA = COLOR.a*modulate.a;
-    ALPHA_SCISSOR = alpha_scissor;
+	ALPHA = COLOR.a * modulate.a;
+    ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
 }"

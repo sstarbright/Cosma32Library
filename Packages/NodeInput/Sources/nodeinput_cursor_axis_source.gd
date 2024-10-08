@@ -13,19 +13,19 @@ enum InputAxisID {
 	Y
 }
 
-export(InputAxisContribution) var contribution
+@export var contribution: InputAxisContribution
 var contribution_max = 1.0
 var contribution_min = 0.0
 var contribution_vector = Vector2.UP
 var direction = 1.0
 var controller = 0
-export(InputAxisID) var axis
-export(float, 0, 0.99, 0.01) var deadzone = 0.0
-export(float, -1, 1, 2) var bias = 1.0
-export var clamping = 1.0
+@export var axis: InputAxisID
+@export var deadzone = 0.0 # (float, 0, 0.99, 0.01)
+@export var bias = 1.0 # (float, -1, 1, 2)
+@export var clamping = 1.0
 var deadzone_ratio
 var cursor_access
-export var sensitivity = 0.5
+@export var sensitivity = 0.5
 
 var previousFloat = 0.0
 

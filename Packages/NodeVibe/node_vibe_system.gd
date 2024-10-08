@@ -5,7 +5,7 @@ var total_vibrations = []
 const weak_to_strong_ratio = 0.02
 
 func _ready():
-	pause_mode = PAUSE_MODE_PROCESS
+	process_mode = PROCESS_MODE_ALWAYS
 	for _controller in range(4):
 		total_vibrations.append(0.0)
 

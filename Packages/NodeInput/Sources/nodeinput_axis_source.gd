@@ -8,31 +8,15 @@ enum InputAxisContribution {
 	RIGHT
 }
 
-enum InputAxisID {
-	LEFT_STICK_X,
-	LEFT_STICK_Y,
-	RIGHT_STICK_X,
-	RIGHT_STICK_Y,
-	AXIS_4,
-	AXIS_5,
-	LEFT_TRIGGER,
-	RIGHT_TRIGGER,
-	AXIS_8,
-	AXIS_9,
-	AXIS_10,
-	VR_TRIGGER = 2,
-	VR_GRIP = 4
-}
-
-export(InputAxisContribution) var contribution
+@export var contribution: InputAxisContribution
 var contribution_max = 1.0
 var contribution_min = 0.0
 var contribution_vector = Vector2.UP
 var direction = 1.0
 var controller = 0
-export(InputAxisID) var axis
-export(float, 0, 0.99, 0.01) var deadzone = 0.0
-export(float, -1, 1, 2) var bias = 1.0
+@export var axis:= JOY_AXIS_LEFT_X
+@export var deadzone = 0.0 # (float, 0, 0.99, 0.01)
+@export var bias = 1.0 # (float, -1, 1, 2)
 var deadzone_ratio
 
 var previousFloat = 0.0
