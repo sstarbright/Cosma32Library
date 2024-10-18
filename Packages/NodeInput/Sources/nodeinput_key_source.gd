@@ -8,7 +8,9 @@ enum InputKeyContribution {
 	RIGHT
 }
 
+##The keyboard key to use.
 @export var key := KEY_A
+##The direction this key should contribute to.
 @export var contribution: InputKeyContribution
 var contribution_float = 1.0
 var contribution_vector = Vector2.UP

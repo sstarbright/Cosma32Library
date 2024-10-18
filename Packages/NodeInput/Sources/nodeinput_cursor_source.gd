@@ -3,10 +3,12 @@ extends InputSource
 
 const SCREEN_CENTER = Vector2(0.5, 0.5)
 
+##Deadzone for the cursor to be not considered.
 @export var deadzone: float = 0.0
 var deadzone_length_squared = 0.0
 var deadzone_length = 0.0
 var deadzone_ratio
+##How sensitive should this cursor be?
 @export var sensitivity = 0.5
 @export var is_relative = false
 var delta

@@ -1,13 +1,16 @@
 class_name PhysicsEventScheduler
 extends Node
 
+#Speed scale at which to process events.
 @export var timing_speed = 1.0
 
 var elapsed_time = 0.0
 var events = Array()
 var event_position = 0
 var current_event_position = 0
+##The event index to skip to.
 @export var skip_to = 0
+##Is the schedule current playing?
 @export var playing = true
 
 func _ready():

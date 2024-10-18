@@ -1,7 +1,9 @@
 class_name ScheduledEvent
 extends Node
 
+##Should the schedulers stop at this event, and wait until it is complete before advancing to the next event?
 @export var wait_for_me = false
+##Is this event complete?
 @export var complete = false
 var started = false
 
