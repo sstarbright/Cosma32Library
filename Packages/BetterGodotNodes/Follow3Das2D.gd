@@ -1,8 +1,10 @@
-class_name Follower3Das2D
+class_name Follow3Das2D
 extends Control
 
+@export var node_to_follow : Node3D
+
 func _ready() -> void:
-	position = get_viewport().get_camera_3d().unproject_position((get_parent() as Node3D).global_position)
+	position = node_to_follow.get_viewport().get_camera_3d().unproject_position(node_to_follow.global_position)
 
 func _physics_process(_delta) -> void:
-	position = get_viewport().get_camera_3d().unproject_position((get_parent() as Node3D).global_position)
+	position = node_to_follow.get_viewport().get_camera_3d().unproject_position(node_to_follow.global_position)
