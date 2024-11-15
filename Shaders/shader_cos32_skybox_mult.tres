@@ -4,6 +4,8 @@
 code = "shader_type spatial;
 render_mode unshaded, blend_mul;
 
+#include \"res://Cosma32Library/Shaders/Includes/fromLinear.gdshaderinc\"
+
 uniform vec4 modulate: source_color = vec4(1,1,1,1);
 uniform sampler2D image_texture : source_color;
 uniform vec2 image_size = vec2(64,64);
@@ -37,7 +39,7 @@ void vertex() {
 }
 
 void fragment() {
-	vec4 filtered_tex = texture(image_texture, ((SCREEN_UV + vec2(-offset.x, offset.y)) * BG_SCALE + BG_COORDS + scrolling_velocity*TIME) * tiling) * modulate * COLOR;
+	vec4 filtered_tex = texture(image_texture, ((SCREEN_UV + vec2(-offset.x, offset.y)) * BG_SCALE + BG_COORDS + scrolling_velocity*TIME) * tiling) * modulate * fromLinear(COLOR);
 	ALBEDO = filtered_tex.rgb;
     ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
 }"

@@ -4,6 +4,8 @@
 code = "shader_type spatial;
 render_mode vertex_lighting, shadows_disabled, blend_mul, unshaded;
 
+#include \"res://Cosma32Library/Shaders/Includes/fromLinear.gdshaderinc\"
+
 uniform vec4 modulate: source_color = vec4(1,1,1,1);
 uniform sampler2D image_texture: source_color;
 uniform vec2 image_size = vec2(64,64);
@@ -30,7 +32,7 @@ void vertex() {
 
 void fragment() {
 	vec2 reflected_uv = (vec2(NORMAL.x, -NORMAL.y) * uv_scale)+uv_offset + (uv_scrolling_velocity*TIME);
-	vec4 texture_sample = texture(image_texture, reflected_uv) * modulate * COLOR;
+	vec4 texture_sample = texture(image_texture, reflected_uv) * modulate * fromLinear(COLOR);
 
     ALBEDO = texture_sample.rgb;
     ALPHA = texture_sample.a;

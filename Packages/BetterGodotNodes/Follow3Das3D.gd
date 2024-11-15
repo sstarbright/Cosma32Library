@@ -1,3 +1,4 @@
+class_name Follow3Das3D
 extends Node3D
 
 @export var node_to_follow : Node3D

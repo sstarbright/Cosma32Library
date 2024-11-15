@@ -13,7 +13,11 @@ func _ready():
 		if child is InputSource:
 			sources.append(child)
 			child.start(self)
-	current = false
+	for source in sources:
+		source.bool()
+		current = source.current
+		if current:
+			break
 
 func _physics_process(delta):
 	super._physics_process(delta)

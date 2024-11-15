@@ -1,8 +1,8 @@
-[gd_resource type="Shader" format=3 uid="uid://ckjwjls8ol1m1"]
+[gd_resource type="Shader" format=3 uid="uid://c8ureek10qv6t"]
 
 [resource]
 code = "shader_type spatial;
-render_mode vertex_lighting, shadows_disabled, blend_mix, unshaded, fog_disabled;
+render_mode vertex_lighting, shadows_disabled, blend_mul, unshaded, fog_disabled;
 
 #include \"res://Cosma32Library/Shaders/Includes/fromLinear.gdshaderinc\"
 

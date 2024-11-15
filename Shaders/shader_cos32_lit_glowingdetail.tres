@@ -4,6 +4,8 @@
 code = "shader_type spatial;
 render_mode vertex_lighting, shadows_disabled, blend_mix, diffuse_lambert;
 
+#include \"res://Cosma32Library/Shaders/Includes/fromLinear.gdshaderinc\"
+
 uniform vec4 modulate: source_color = vec4(1,1,1,1);
 uniform vec4 glow_modulate: source_color = vec4(1,1,1,1);
 uniform float glow_pulse = 0;
@@ -37,7 +39,7 @@ void fragment() {
 	vec4 texture_sample = texture(image_texture, mod_uv);
 	vec4 emissive_sample = texture(emission_texture, mod_uv);
 
-    ALBEDO = mix(COLOR.rgb, texture_sample.rgb, texture_sample.a) * modulate.rgb;
+    ALBEDO = mix(fromLinear(COLOR).rgb, texture_sample.rgb, texture_sample.a) * modulate.rgb;
 	EMISSION = emissive_sample.rgb * emissive_sample.a * (sin(TIME*glow_pulse+offset)+1.0)/2.0 * glow_modulate.rgb;
 	ALPHA = COLOR.a*modulate.a;
     ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
