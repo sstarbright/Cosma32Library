@@ -5,8 +5,8 @@ var control_children = Dictionary()
 var center_position = Vector2.ZERO
 
 func _ready():
-	var _connect = connect("child_entered_tree", Callable(self, "child_added"))
-	var _connect1 = connect("child_exiting_tree", Callable(self, "child_removed"))
+	var _connect = child_entered_tree.connect(Callable(self, "child_added"))
+	var _connect1 = child_exiting_tree.connect(Callable(self, "child_removed"))
 
 func _process(_delta):
 	center_position = size/2

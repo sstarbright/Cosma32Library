@@ -10,7 +10,7 @@ var fade_pos = 0.0
 var start_db
 
 func _ready():
-	var _finished = connect("finished", Callable(self, "queue_free"))
+	var _finished = finished.connect(Callable(self, "queue_free"))
 
 func audio_player_process(delta):
 	if !fade_out:

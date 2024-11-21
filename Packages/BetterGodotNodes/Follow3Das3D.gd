@@ -18,7 +18,7 @@ func _ready() -> void:
 			global_rotation = node_to_follow.global_rotation
 	else:
 		visible = false
-	connect("visibility_changed", Callable(self, "vis_changed"))
+	visibility_changed.connect(Callable(self, "vis_changed"))
 
 func _physics_process(_delta) -> void:
 	update_position()
@@ -38,4 +38,4 @@ func update_position():
 			global_rotation = node_to_follow.global_rotation
 
 func vis_changed():
-	emit_signal("visibility_changed_with_state", visible)
+	visibility_changed_with_state.emit(visible)

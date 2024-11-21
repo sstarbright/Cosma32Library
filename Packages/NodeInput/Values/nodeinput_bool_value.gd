@@ -38,7 +38,7 @@ func _physics_process(delta):
 			break
 
 func do_down():
-	emit_signal("on_down")
+	on_down.emit()
 
 func do_up():
-	emit_signal("on_up")
+	on_up.emit()

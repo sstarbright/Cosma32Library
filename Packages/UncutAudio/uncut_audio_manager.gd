@@ -11,10 +11,10 @@ func _ready():
 	random.randomize()
 	audio_space_2d = Node2D.new()
 	audio_space_2d.name = "AudioSpace2D"
-	get_node("/root").call_deferred("add_child", audio_space_2d)
+	get_node("/root").add_child.call_deferred(audio_space_2d)
 	audio_space_3d = Node3D.new()
 	audio_space_3d.name = "AudioSpace3D"
-	get_node("/root").call_deferred("add_child", audio_space_3d)
+	get_node("/root").add_child.call_deferred(audio_space_3d)
 
 func _process(delta):
 	for existing_stream_name in existing_streams.keys():

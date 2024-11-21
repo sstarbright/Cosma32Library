@@ -14,8 +14,8 @@ var current_event_position = 0
 @export var playing = true
 
 func _ready():
-	var _added = connect("child_entered_tree", Callable(self, "child_added"))
-	var _removed = connect("child_exiting_tree", Callable(self, "child_removed"))
+	var _added = child_entered_tree.connect(Callable(self, "child_added"))
+	var _removed = child_exiting_tree.connect(Callable(self, "child_removed"))
 	var children = get_children()
 	for child in children:
 		if child is ScheduledEvent || child is TimedEvent:
