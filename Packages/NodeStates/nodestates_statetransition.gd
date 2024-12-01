@@ -14,6 +14,7 @@ func enter_transition() -> bool:
 	if get_parent() is StateNode && get_parent().leave_state():
 		transition_started.emit()
 		if target_state is AnimationStateNode:
+			target_state.setup_event_track()
 			target_state.play(transition_time)
 		if transition_time == 0.0:
 			leave_transition()

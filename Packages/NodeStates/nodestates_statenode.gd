@@ -26,7 +26,7 @@ func leave_state() -> bool:
 	else:
 		return false
 
-func process_state(delta: float) -> void:
+func process_state(_delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
