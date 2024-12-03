@@ -12,6 +12,7 @@ signal transition_ended
 
 func enter_transition() -> bool:
 	if get_parent() is StateNode && get_parent().leave_state():
+		print("Transitioning to " + target_state.name)
 		transition_started.emit()
 		if target_state is AnimationStateNode:
 			target_state.setup_event_track()

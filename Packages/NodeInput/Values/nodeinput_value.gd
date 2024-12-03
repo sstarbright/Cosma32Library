@@ -6,6 +6,7 @@ var disabled_sources = []
 var current
 var previous
 var changed
+var base_process_mode
 
 func _physics_process(_delta):
 	previous = current
@@ -28,3 +29,10 @@ func enable_source(source_name):
 			disabled_sources.remove(enable_index)
 			break
 		enable_index += 1
+
+func disable():
+	base_process_mode = process_mode
+	process_mode = Node.PROCESS_MODE_DISABLED
+
+func enable():
+	process_mode = base_process_mode

@@ -6,6 +6,7 @@ signal on_up()
 
 var down = false
 var up = false
+var ignore_next_frame = false
 
 func _ready():
 	var children = get_children()
@@ -31,14 +32,19 @@ func _physics_process(delta):
 			down = source.down
 			up = source.up
 			
-			if down:
+			if down && !ignore_next_frame:
 				do_down()
-			elif up:
+			elif up && !ignore_next_frame:
 				do_up()
 			break
+	ignore_next_frame = false
 
 func do_down():
 	on_down.emit()
 
 func do_up():
 	on_up.emit()
+
+func enable():
+	ignore_next_frame = true
+	super.enable()
