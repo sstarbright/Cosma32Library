@@ -39,7 +39,7 @@ void vertex() {
 }
 
 void fragment() {
-	vec4 filtered_tex = texture(image_texture, ((SCREEN_UV + vec2(-offset.x, offset.y)) * BG_SCALE + BG_COORDS + scrolling_velocity*TIME) * tiling) * modulate * fromLinear(COLOR);
+	vec4 filtered_tex = texture(image_texture, ((SCREEN_UV + vec2(-offset.x, offset.y)) * BG_SCALE + BG_COORDS + scrolling_velocity*TIME) * tiling) * modulate * COLOR;
 	ALBEDO = filtered_tex.rgb;
     ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
 }"

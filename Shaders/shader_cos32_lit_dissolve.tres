@@ -36,7 +36,7 @@ void vertex() {
 
 void fragment() {
 	vec2 mod_uv = UV * uv_scale + uv_offset + (uv_scrolling_velocity*TIME);
-	vec4 texture_sample = texture(image_texture, mod_uv) * modulate * fromLinear(COLOR);
+	vec4 texture_sample = texture(image_texture, mod_uv) * modulate * COLOR;
 
 	vec2 mod_dissolve = UV * dissolve_scale + dissolve_offset + (dissolve_scrolling_velocity*TIME);
 

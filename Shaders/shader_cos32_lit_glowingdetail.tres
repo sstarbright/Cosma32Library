@@ -39,7 +39,7 @@ void fragment() {
 	vec4 texture_sample = texture(image_texture, mod_uv);
 	vec4 emissive_sample = texture(emission_texture, mod_uv);
 
-    ALBEDO = mix(fromLinear(COLOR).rgb, texture_sample.rgb, texture_sample.a) * modulate.rgb;
+    ALBEDO = mix(COLOR.rgb, texture_sample.rgb, texture_sample.a) * modulate.rgb;
 	EMISSION = emissive_sample.rgb * emissive_sample.a * (sin(TIME*glow_pulse+offset)+1.0)/2.0 * glow_modulate.rgb;
 	ALPHA = COLOR.a*modulate.a;
     ALPHA_SCISSOR_THRESHOLD = alpha_scissor;

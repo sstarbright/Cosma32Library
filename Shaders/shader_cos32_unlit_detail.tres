@@ -35,7 +35,7 @@ void fragment() {
 	vec2 mod_uv = UV * uv_scale + uv_offset + (uv_scrolling_velocity*TIME);
 	vec4 texture_sample = texture(image_texture, mod_uv);
 
-    ALBEDO = mix(fromLinear(COLOR).rgb, texture_sample.rgb, texture_sample.a) * modulate.rgb;
+    ALBEDO = mix(COLOR.rgb, texture_sample.rgb, texture_sample.a) * modulate.rgb;
 	ALPHA = COLOR.a*modulate.a;
     ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
 }"

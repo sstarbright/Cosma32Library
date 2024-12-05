@@ -33,7 +33,7 @@ void vertex() {
 
 void fragment() {
 	vec2 mod_uv = UV * uv_scale + uv_offset + (uv_scrolling_velocity*TIME);
-	vec4 texture_sample = texture(image_texture, mod_uv) * modulate * fromLinear(COLOR);
+	vec4 texture_sample = texture(image_texture, mod_uv) * modulate * COLOR;
 
     ALBEDO = texture_sample.rgb;
     ALPHA = texture_sample.a * alpha_blend;
