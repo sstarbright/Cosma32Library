@@ -6,7 +6,7 @@ var disabled_sources = []
 var current
 var previous
 var changed
-var base_process_mode
+@export var base_process_mode := ProcessMode.PROCESS_MODE_INHERIT
 
 func _physics_process(_delta):
 	previous = current
@@ -31,7 +31,6 @@ func enable_source(source_name):
 		enable_index += 1
 
 func disable():
-	base_process_mode = process_mode
 	process_mode = Node.PROCESS_MODE_DISABLED
 
 func enable():

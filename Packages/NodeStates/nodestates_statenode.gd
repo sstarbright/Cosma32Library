@@ -1,19 +1,19 @@
 class_name StateNode
 extends NodeStates
 
-@export var enabled := false
+var enabled := false
 
 signal state_entered
 signal state_exited
 
 func _ready() -> void:
-	if enabled:
-		enter_state(true)
+	pass
 
-func enter_state(entered_on_ready := false) -> bool:
-	if !enabled || entered_on_ready:
+func enter_state(entered_on_start := false) -> bool:
+	if !enabled || entered_on_start:
 		state_entered.emit()
 		enabled = true
+		get_parent().current_state = self
 		return false
 	else:
 		return true
