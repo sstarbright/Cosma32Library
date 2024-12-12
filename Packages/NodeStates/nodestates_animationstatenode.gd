@@ -49,6 +49,7 @@ func clear_event_track():
 	for child in get_children():
 		if child is AnimationStateEvent:
 				child.state_index = -1
+				child.cancel()
 	event_indices.clear()
 
 func play(transition_time = -1.0):

@@ -12,5 +12,8 @@ func enable():
 func disable():
 	get_parent().disable_event(self)
 
+func cancel():
+	pass
+
 func _exit_tree():
 	get_parent().disable_event(self)
