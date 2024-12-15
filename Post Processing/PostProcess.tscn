@@ -1,0 +1,255 @@
+[gd_scene load_steps=33 format=3 uid="uid://dusdkjr3duamx"]
+
+[ext_resource type="Script" uid="uid://4ycmbldgr1s5" path="res://Cosma32Library/Post Processing/PostProcessScene.gd" id="1_68cxu"]
+[ext_resource type="Script" uid="uid://bqtycnp0aawf3" path="res://Cosma32Library/Post Processing/AccMotionBlurEffect.gd" id="1_qbjnv"]
+[ext_resource type="Script" uid="uid://kejlg8ah0quu" path="res://Cosma32Library/Post Processing/AddTexToExtRes.gd" id="2_36755"]
+[ext_resource type="PackedScene" uid="uid://bthc41hntqp5b" path="res://Cosma32Library/Post Processing/Game.tscn" id="2_us2qq"]
+[ext_resource type="Script" uid="uid://dgue8fr33wcwu" path="res://Cosma32Library/Post Processing/AddSubToIntRes.gd" id="3_8ykct"]
+[ext_resource type="Shader" uid="uid://pats4iyoj6si" path="res://Cosma32Library/Post Processing/post_process_dither.gdshader" id="3_47hj2"]
+[ext_resource type="Script" uid="uid://ydwwat3bs3e" path="res://Cosma32Library/Post Processing/AddBuffToIntRes.gd" id="4_q27tj"]
+[ext_resource type="Shader" uid="uid://car7weolixr2" path="res://Cosma32Library/Post Processing/post_process_colorbleed.tres" id="5_h5mi0"]
+[ext_resource type="PackedScene" uid="uid://087yg0mrxdmu" path="res://Cosma32Library/Post Processing/UI.tscn" id="6_3u1c7"]
+[ext_resource type="Script" uid="uid://dws3w8of7wu7n" path="res://Cosma32Library/Post Processing/AddBuffToExtRes.gd" id="6_33a2k"]
+[ext_resource type="Script" uid="uid://dghlbpl3qp1a7" path="res://Cosma32Library/Post Processing/AddTexToIntRes.gd" id="6_lflnl"]
+[ext_resource type="Shader" uid="uid://blqvonajgihgc" path="res://Cosma32Library/Post Processing/post_process_sharpen.tres" id="6_pyg2y"]
+[ext_resource type="Script" uid="uid://bj23afxm6mea8" path="res://Cosma32Library/Post Processing/ScreenFadeEffect.gd" id="9_ketex"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_q54bb"]
+viewport_path = NodePath("ExternalView")
+
+[sub_resource type="World3D" id="World3D_qrgc2"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_feaeh"]
+viewport_path = NodePath("ExternalView/InternalRender/World")
+
+[sub_resource type="ImageTexture" id="ImageTexture_s3dgy"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3c3k3"]
+viewport_path = NodePath("ExternalView/InternalRender")
+
+[sub_resource type="Curve" id="Curve_qfd8n"]
+_data = [Vector2(0, 0), 0.0, 2.96006, 0, 1, Vector2(0.246787, 0.730503), 0.594298, 0.594298, 0, 0, Vector2(1, 1), 0.357796, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="World3D" id="World3D_55h7k"]
+
+[sub_resource type="Environment" id="Environment_o4crh"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.0382291, 0, 0.461868, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_55h7k"]
+viewport_path = NodePath("ExternalView/InternalUI/World")
+
+[sub_resource type="ImageTexture" id="ImageTexture_55h7k"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ketex"]
+viewport_path = NodePath("ExternalView/InternalUI/World")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_el8aa"]
+viewport_path = NodePath("ExternalView/InternalUI")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5gso0"]
+viewport_path = NodePath("ExternalView/InternalRender")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_55h7k"]
+blend_mode = 2
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qo7a3"]
+viewport_path = NodePath("ExternalView/InternalUI")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_el8aa"]
+blend_mode = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8fpr5"]
+shader = ExtResource("3_47hj2")
+shader_parameter/fog_color = null
+shader_parameter/resolution_downsampling = 1.0
+shader_parameter/bit_depth = 64.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n6x0k"]
+shader = ExtResource("5_h5mi0")
+shader_parameter/blur_amount = 1.744
+shader_parameter/signal_quality = 0.0
+shader_parameter/bottom_strenth = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3pho6"]
+shader = ExtResource("6_pyg2y")
+shader_parameter/sharpen_amount = 0.3
+
+[node name="PostProcess" type="Node2D" node_paths=PackedStringArray("world_motion_blur", "ui_motion_blur", "game_fade_filter", "screen_fade_filter", "dither_filter", "color_bleed_filter", "sharpen_filter", "game_layer", "ui_layer")]
+script = ExtResource("1_68cxu")
+world_motion_blur = NodePath("ExternalView/InternalRender/AccumulationBlur")
+ui_motion_blur = NodePath("ExternalView/InternalUI/AccumulationBlur")
+game_fade_filter = NodePath("ExternalView/GameFade")
+screen_fade_filter = NodePath("ExternalView/ScreenFade")
+dither_filter = NodePath("ExternalView/Dither")
+color_bleed_filter = NodePath("Colorbleed")
+sharpen_filter = NodePath("Sharpen")
+game_layer = NodePath("ExternalView/InternalRender/World/Game")
+ui_layer = NodePath("ExternalView/InternalUI/World/UI")
+
+[node name="ExternalViewTexture" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_q54bb")
+script = ExtResource("2_36755")
+
+[node name="ExternalView" type="SubViewport" parent="."]
+disable_3d = true
+script = ExtResource("3_8ykct")
+
+[node name="InternalRender" type="SubViewport" parent="ExternalView"]
+disable_3d = true
+snap_2d_transforms_to_pixel = true
+script = ExtResource("3_8ykct")
+
+[node name="World" type="SubViewport" parent="ExternalView/InternalRender"]
+world_3d = SubResource("World3D_qrgc2")
+snap_2d_transforms_to_pixel = true
+msaa_3d = 1
+screen_space_aa = 1
+canvas_item_default_texture_filter = 0
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+size = Vector2i(480, 360)
+script = ExtResource("3_8ykct")
+
+[node name="Game" parent="ExternalView/InternalRender/World" instance=ExtResource("2_us2qq")]
+
+[node name="WorldRenderCamera" type="Camera2D" parent="ExternalView/InternalRender"]
+anchor_mode = 0
+
+[node name="WorldRenderTexture" type="TextureRect" parent="ExternalView/InternalRender"]
+texture_filter = 1
+offset_right = 480.0
+offset_bottom = 360.0
+texture = SubResource("ViewportTexture_feaeh")
+
+[node name="AccumulationBlur" type="TextureRect" parent="ExternalView/InternalRender"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+texture = SubResource("ImageTexture_s3dgy")
+script = ExtResource("1_qbjnv")
+viewport_texture = SubResource("ViewportTexture_feaeh")
+blur_viewport_texture = SubResource("ViewportTexture_3c3k3")
+strength_curve = SubResource("Curve_qfd8n")
+
+[node name="InternalUI" type="SubViewport" parent="ExternalView"]
+transparent_bg = true
+msaa_3d = 1
+screen_space_aa = 1
+script = ExtResource("3_8ykct")
+
+[node name="World" type="SubViewport" parent="ExternalView/InternalUI"]
+world_3d = SubResource("World3D_55h7k")
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+msaa_3d = 1
+screen_space_aa = 1
+canvas_item_default_texture_filter = 0
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+size = Vector2i(480, 360)
+script = ExtResource("3_8ykct")
+
+[node name="InternalUICamera" type="Camera3D" parent="ExternalView/InternalUI/World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.23805)
+environment = SubResource("Environment_o4crh")
+projection = 1
+current = true
+size = 11.501
+
+[node name="UI" parent="ExternalView/InternalUI/World" instance=ExtResource("6_3u1c7")]
+
+[node name="UIRenderCamera" type="Camera2D" parent="ExternalView/InternalUI"]
+anchor_mode = 0
+
+[node name="UIRenderTexture" type="TextureRect" parent="ExternalView/InternalUI"]
+texture_filter = 1
+offset_right = 480.0
+offset_bottom = 360.0
+texture = SubResource("ViewportTexture_55h7k")
+
+[node name="AccumulationBlur" type="TextureRect" parent="ExternalView/InternalUI"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+texture = SubResource("ImageTexture_55h7k")
+script = ExtResource("1_qbjnv")
+viewport_texture = SubResource("ViewportTexture_ketex")
+blur_viewport_texture = SubResource("ViewportTexture_el8aa")
+strength_curve = SubResource("Curve_qfd8n")
+
+[node name="InternalRenderTexture" type="TextureRect" parent="ExternalView"]
+texture_filter = 1
+offset_right = 512.0
+offset_bottom = 512.0
+texture = SubResource("ViewportTexture_5gso0")
+script = ExtResource("6_lflnl")
+
+[node name="GameFade" type="ColorRect" parent="ExternalView"]
+visible = false
+material = SubResource("CanvasItemMaterial_55h7k")
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_ketex")
+
+[node name="InternalUITexture" type="TextureRect" parent="ExternalView"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_qo7a3")
+script = ExtResource("6_lflnl")
+
+[node name="ScreenFade" type="ColorRect" parent="ExternalView"]
+visible = false
+material = SubResource("CanvasItemMaterial_el8aa")
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_ketex")
+
+[node name="Dither" type="BackBufferCopy" parent="ExternalView"]
+visible = false
+texture_filter = 1
+position = Vector2(480, 360)
+scale = Vector2(4.8, 3.6)
+copy_mode = 2
+script = ExtResource("4_q27tj")
+
+[node name="ColorRect" type="ColorRect" parent="ExternalView/Dither"]
+material = SubResource("ShaderMaterial_8fpr5")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = -100.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Colorbleed" type="BackBufferCopy" parent="."]
+visible = false
+copy_mode = 2
+script = ExtResource("6_33a2k")
+
+[node name="ColorRect" type="ColorRect" parent="Colorbleed"]
+material = SubResource("ShaderMaterial_n6x0k")
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="Sharpen" type="BackBufferCopy" parent="."]
+visible = false
+copy_mode = 2
+script = ExtResource("6_33a2k")
+
+[node name="ColorRect" type="ColorRect" parent="Sharpen"]
+material = SubResource("ShaderMaterial_3pho6")
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0

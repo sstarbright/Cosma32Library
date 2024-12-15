@@ -1,0 +1,126 @@
+[gd_resource type="VisualShader" load_steps=12 format=3 uid="uid://cdvck7k81bi3c"]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="1"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="2"]
+parameter_name = "Amount"
+hint = 1
+min = -2.0
+max = 2.0
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeInput" id="9"]
+input_name = "texture"
+
+[sub_resource type="VisualShaderNodeClamp" id="10"]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="11"]
+parameter_name = "Start"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="12"]
+parameter_name = "End"
+default_value_enabled = true
+default_value = 1.0
+
+[sub_resource type="VisualShaderNodeTexture" id="3"]
+source = 5
+
+[sub_resource type="VisualShaderNodeInput" id="5"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="6"]
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="7"]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="8"]
+operator = 1
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform float Amount : hint_range(-2, 2) = 0;
+uniform float Start = 0;
+uniform float End = 1;
+
+
+
+void fragment() {
+// Input:6
+	vec2 n_out6p0 = UV;
+
+
+// VectorDecompose:7
+	float n_out7p0 = vec3(n_out6p0, 0.0).x;
+	float n_out7p1 = vec3(n_out6p0, 0.0).y;
+	float n_out7p2 = vec3(n_out6p0, 0.0).z;
+
+
+// FloatParameter:11
+	float n_out11p0 = Amount;
+
+
+// FloatOp:10
+	float n_out10p0 = n_out7p1 * n_out11p0;
+
+
+// FloatOp:9
+	float n_out9p0 = n_out7p0 - n_out10p0;
+
+
+// FloatParameter:14
+	float n_out14p0 = Start;
+
+
+// FloatParameter:15
+	float n_out15p0 = End;
+
+
+// Clamp:13
+	float n_out13p0 = clamp(n_out9p0, n_out14p0, n_out15p0);
+
+
+// VectorCompose:8
+	float n_in8p2 = 0.00000;
+	vec3 n_out8p0 = vec3(n_out13p0, n_out7p1, n_in8p2);
+
+
+	vec4 n_out4p0;
+// Texture2D:4
+	n_out4p0 = texture(TEXTURE, vec2(n_out8p0.xy));
+
+
+// Output:0
+	COLOR.rgb = vec3(n_out4p0.xyz);
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(480, 80)
+nodes/fragment/4/node = SubResource("3")
+nodes/fragment/4/position = Vector2(160, 40)
+nodes/fragment/6/node = SubResource("5")
+nodes/fragment/6/position = Vector2(-1300, 120)
+nodes/fragment/7/node = SubResource("6")
+nodes/fragment/7/position = Vector2(-1060, -80)
+nodes/fragment/8/node = SubResource("7")
+nodes/fragment/8/position = Vector2(-60, -140)
+nodes/fragment/9/node = SubResource("8")
+nodes/fragment/9/position = Vector2(-460, -60)
+nodes/fragment/10/node = SubResource("1")
+nodes/fragment/10/position = Vector2(-680, 60)
+nodes/fragment/11/node = SubResource("2")
+nodes/fragment/11/position = Vector2(-1060, 160)
+nodes/fragment/12/node = SubResource("9")
+nodes/fragment/12/position = Vector2(-40, 160)
+nodes/fragment/13/node = SubResource("10")
+nodes/fragment/13/position = Vector2(-260, -300)
+nodes/fragment/14/node = SubResource("11")
+nodes/fragment/14/position = Vector2(-700, -380)
+nodes/fragment/15/node = SubResource("12")
+nodes/fragment/15/position = Vector2(-720, -220)
+nodes/fragment/connections = PackedInt32Array(4, 0, 0, 0, 6, 0, 7, 0, 8, 0, 4, 0, 7, 0, 9, 0, 7, 1, 8, 1, 10, 0, 9, 1, 11, 0, 10, 1, 7, 1, 10, 0, 12, 0, 4, 2, 9, 0, 13, 0, 13, 0, 8, 0, 14, 0, 13, 1, 15, 0, 13, 2)

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://087yg0mrxdmu"]
+
+[ext_resource type="Script" uid="uid://ct4dsy46qcws7" path="res://Cosma32Library/Post Processing/UILayer.gd" id="1_4a8cm"]
+
+[node name="UI" type="Node3D"]
+script = ExtResource("1_4a8cm")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bthc41hntqp5b"]
+
+[ext_resource type="Script" uid="uid://bdx4nvr5ru5u6" path="res://Cosma32Library/Post Processing/GameLayer.gd" id="1_l5hbx"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_l5hbx")
