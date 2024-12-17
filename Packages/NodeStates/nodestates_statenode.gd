@@ -18,7 +18,7 @@ func enter_state(entered_on_start := false) -> bool:
 	else:
 		return true
 
-func leave_state() -> bool:
+func leave_state(_cancel_events := false) -> bool:
 	if enabled:
 		state_exited.emit()
 		enabled = false

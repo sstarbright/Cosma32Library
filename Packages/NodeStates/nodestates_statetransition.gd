@@ -10,8 +10,8 @@ var is_transition := false
 signal transition_started
 signal transition_ended
 
-func enter_transition() -> bool:
-	if get_parent() is StateNode && get_parent().leave_state():
+func enter_transition(cancel_events := false) -> bool:
+	if get_parent() is StateNode && get_parent().leave_state(cancel_events):
 		transition_started.emit()
 		if target_state is AnimationStateNode:
 			target_state.setup_event_track()

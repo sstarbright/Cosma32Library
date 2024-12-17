@@ -35,21 +35,22 @@ func enter_state(entered_on_start := false) -> bool:
 		get_parent().animation_player.play(animation_name, -1, time_scale)
 	return super.enter_state(entered_on_start)
 
-func leave_state() -> bool:
+func leave_state(cancel_events := false) -> bool:
 	if super.leave_state():
 		if event_indices.size() > 0:
-			clear_event_track()
+			clear_event_track(cancel_events)
 		return true
 	else:
 		return false
 
-func clear_event_track():
+func clear_event_track(cancel_events := false):
 	for state_index in range(event_indices.size()):
 		target_animation.track_remove_key(event_track, 0)
 	for child in get_children():
 		if child is AnimationStateEvent:
 				child.state_index = -1
-				child.cancel()
+				if cancel_events:
+					child.cancel()
 	event_indices.clear()
 
 func play(transition_time = -1.0):
