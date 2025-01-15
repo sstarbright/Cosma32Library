@@ -10,6 +10,7 @@ extends Node2D
 @export var sharpen_filter : BackBufferCopy
 @export var game_layer : GameLayer
 @export var ui_layer : UILayer
+@export var audio_noise : AudioStreamPlayer
 
 func _ready():
 	PostProcessEngine.post_process_scene = self

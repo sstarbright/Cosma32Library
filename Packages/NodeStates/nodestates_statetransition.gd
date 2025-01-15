@@ -3,6 +3,7 @@ extends NodeStates
 
 @export var target_state : StateNode
 @export var transition_time := 0.0
+@export var dependency : StateParameter
 
 var elapsed_time := 0.0
 var is_transition := false
@@ -10,8 +11,12 @@ var is_transition := false
 signal transition_started
 signal transition_ended
 
+func _ready() -> void:
+	if dependency == null:
+		dependency = StateParameter.new()
+
 func enter_transition(cancel_events := false) -> bool:
-	if get_parent() is StateNode && get_parent().leave_state(cancel_events):
+	if dependency.parameter_true() && target_state.dependency.parameter_true() && get_parent() is StateNode && get_parent().leave_state(cancel_events):
 		transition_started.emit()
 		if target_state is AnimationStateNode:
 			target_state.setup_event_track()
