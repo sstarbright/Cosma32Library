@@ -21,6 +21,8 @@ func enter_transition(cancel_events := false) -> bool:
 		if target_state is AnimationStateNode:
 			target_state.setup_event_track()
 			target_state.play(transition_time)
+			if target_state.state_sync != null:
+				target_state.get_parent().animation_player.seek(target_state.state_sync.sync_position())
 		if transition_time == 0.0:
 			leave_transition()
 		else:

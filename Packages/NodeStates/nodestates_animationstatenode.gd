@@ -3,6 +3,7 @@ extends StateNode
 
 @export var time_scale := 1.0
 @export var animation_name := ""
+@export var state_sync : AnimationStateSync
 
 var event_track = -1
 var target_animation : Animation
@@ -69,3 +70,9 @@ func enable_event(event : AnimationStateEvent):
 			"method": "emit_event_signal",
 			"args": [event.event_called, true]
 		})
+
+func get_animation_position() -> float:
+	if is_active():
+		return get_parent().animation_player.current_animation_position
+	else:
+		return 0.0
