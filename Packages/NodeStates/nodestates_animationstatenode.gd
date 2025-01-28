@@ -33,7 +33,7 @@ func setup_event_track():
 func enter_state(entered_on_start := false) -> bool:
 	if entered_on_start:
 		setup_event_track()
-		get_parent().animation_player.play(animation_name, -1, time_scale)
+		play(-1)
 	return super.enter_state(entered_on_start)
 
 func leave_state(cancel_events := false) -> bool:

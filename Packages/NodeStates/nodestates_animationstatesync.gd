@@ -7,8 +7,11 @@ var enabled := false
 
 func _init() -> void:
 	if resource_local_to_scene:
-		enabled = true
-		sync_state_node = get_local_scene().get_node(sync_state) as StateNode
+		if !sync_state.is_empty():
+			enabled = true
+			sync_state_node = get_local_scene().get_node(sync_state) as StateNode
+		else:
+			print("ERROR: No Sync AnimationStateNode selected.")
 	else:
 		print("ERROR: Sync only works if Local to Scene.")
 

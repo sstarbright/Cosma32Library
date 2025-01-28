@@ -7,8 +7,11 @@ var enabled := false
 
 func _init() -> void:
 	if resource_local_to_scene:
-		enabled = true
-		dependant_state_node = get_local_scene().get_node(dependant_state) as StateNode
+		if !dependant_state.is_empty():
+			enabled = true
+			dependant_state_node = get_local_scene().get_node(dependant_state) as StateNode
+		else:
+			print("ERROR: No Dependant StateNode selected.")
 	else:
 		print("ERROR: Parameter only works if Local to Scene.")
 

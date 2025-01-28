@@ -68,7 +68,7 @@ blend_mode = 2
 shader = ExtResource("3_47hj2")
 shader_parameter/fog_color = null
 shader_parameter/resolution_downsampling = 1.0
-shader_parameter/bit_depth = 64.0
+shader_parameter/bit_depth = 20.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_upal2"]
 shader = ExtResource("15_upal2")
@@ -227,7 +227,6 @@ offset_bottom = 40.0
 script = ExtResource("9_ketex")
 
 [node name="Dither" type="BackBufferCopy" parent="ExternalView"]
-visible = false
 texture_filter = 1
 position = Vector2(480, 360)
 scale = Vector2(4.8, 3.6)
@@ -267,7 +266,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Red Noise" type="TextureRect" parent="ExternalView"]
-visible = false
 modulate = Color(1, 0, 0, 1)
 self_modulate = Color(0.02, 0.02, 0.02, 1)
 material = SubResource("CanvasItemMaterial_cgyby")
@@ -279,7 +277,6 @@ script = ExtResource("11_cgyby")
 metadata/_custom_type_script = ExtResource("6_lflnl")
 
 [node name="Green Noise" type="TextureRect" parent="ExternalView"]
-visible = false
 modulate = Color(0, 1, 0, 1)
 self_modulate = Color(0.02, 0.02, 0.02, 1)
 material = SubResource("CanvasItemMaterial_cgyby")
@@ -290,7 +287,6 @@ script = ExtResource("6_lflnl")
 metadata/_custom_type_script = ExtResource("6_lflnl")
 
 [node name="Blue Noise" type="TextureRect" parent="ExternalView"]
-visible = false
 modulate = Color(0, 0, 1, 1)
 self_modulate = Color(0.02, 0.02, 0.02, 1)
 material = SubResource("CanvasItemMaterial_cgyby")
@@ -302,7 +298,6 @@ script = ExtResource("6_lflnl")
 metadata/_custom_type_script = ExtResource("6_lflnl")
 
 [node name="Colorbleed" type="BackBufferCopy" parent="."]
-visible = false
 position = Vector2(720, 540)
 scale = Vector2(7.2, 5.4)
 copy_mode = 2
@@ -321,7 +316,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sharpen" type="BackBufferCopy" parent="."]
-visible = false
 copy_mode = 2
 script = ExtResource("6_33a2k")
 
