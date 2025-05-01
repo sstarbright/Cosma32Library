@@ -23,7 +23,7 @@ void vertex() {
 
 void fragment() {
 	vec2 reflected_uv = (vec2(NORMAL.x, -NORMAL.y) * uv_scale)+uv_offset + (uv_scrolling_velocity*TIME);
-	vec4 texture_sample = texture(image_texture, reflected_uv) * modulate * COLOR;
+	vec4 texture_sample = texture(image_texture, reflected_uv) * modulate;
 
     ALBEDO = texture_sample.rgb;
     ALPHA = texture_sample.a;
