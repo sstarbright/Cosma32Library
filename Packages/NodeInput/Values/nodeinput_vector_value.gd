@@ -12,6 +12,8 @@ var collecting_single = false
 var collecting_single_index = 0
 var num_singles = 0
 
+signal input_updated(current : Vector2, last : Vector2)
+
 func _ready():
 	var children = get_children()
 	for child in children:
@@ -85,9 +87,11 @@ func _ready():
 	current = Vector2.ZERO
 
 func _physics_process(_delta):
+	previous = current
 	for source in sources:
 		source.vector()
 		if (source.changed):
 			current = source.current.limit_length(length_limit)
 			changed = true
 			break
+	input_updated.emit(current, previous)

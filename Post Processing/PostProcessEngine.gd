@@ -5,7 +5,7 @@ signal external_resolution_changed(old_resolution: Vector2i, new_resolution: Vec
 
 var post_process_scene : PostProcessScene
 var internal_resolution := Vector2i(480, 360)
-var external_resolution := Vector2i(1440, 1080)
+var external_resolution := Vector2i(960, 720)
 
 func set_internal_resolution(new_resolution: Vector2i):
 	internal_resolution_changed.emit(internal_resolution, new_resolution)

@@ -3,6 +3,7 @@ extends InputValue
 
 signal on_down()
 signal on_up()
+signal input_updated(value : bool)
 
 var down = false
 var up = false
@@ -38,6 +39,7 @@ func _physics_process(delta):
 				do_up()
 			break
 	ignore_next_frame = false
+	input_updated.emit(current)
 
 func do_down():
 	on_down.emit()

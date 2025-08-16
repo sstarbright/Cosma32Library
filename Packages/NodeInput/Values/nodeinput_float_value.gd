@@ -5,6 +5,8 @@ var collecting_half = false
 var collecting_half_index = 0
 var num_halfs = 0
 
+signal input_updated(current : float, last : float)
+
 func _ready():
 	var children = get_children()
 	for child in children:
@@ -44,3 +46,4 @@ func _physics_process(_delta):
 			current = source.current
 			changed = true
 			break
+	input_updated.emit(current, previous)
