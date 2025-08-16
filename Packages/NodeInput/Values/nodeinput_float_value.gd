@@ -37,6 +37,7 @@ func _ready():
 	current = 0.0
 
 func _physics_process(_delta):
+	previous = current
 	for source in sources:
 		source.float()
 		if (source.changed):

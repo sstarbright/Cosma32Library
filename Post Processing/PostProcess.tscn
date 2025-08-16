@@ -14,7 +14,7 @@
 [ext_resource type="Shader" uid="uid://blqvonajgihgc" path="res://Cosma32Library/Post Processing/post_process_sharpen.tres" id="6_pyg2y"]
 [ext_resource type="Script" uid="uid://bj23afxm6mea8" path="res://Cosma32Library/Post Processing/ScreenFadeEffect.gd" id="9_ketex"]
 [ext_resource type="Script" uid="uid://d24a4n14jxubh" path="res://Cosma32Library/Post Processing/pp_noise.gd" id="11_cgyby"]
-[ext_resource type="AudioStream" uid="uid://du1fuv2ryrplu" path="res://Cosma32Library/Post Processing/analog_noise_b.wav" id="15_4647m"]
+[ext_resource type="AudioStream" uid="uid://bfyl3wqjmg5wo" path="res://Cosma32Library/Post Processing/analog_noise_b.wav" id="15_4647m"]
 [ext_resource type="Shader" uid="uid://b7l5b4aowfvil" path="res://Cosma32Library/Post Processing/post_process_interlace.gdshader" id="15_upal2"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_q54bb"]
@@ -66,13 +66,13 @@ blend_mode = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8fpr5"]
 shader = ExtResource("3_47hj2")
-shader_parameter/fog_color = null
+shader_parameter/fog_color = Color(0, 0, 0, 1)
 shader_parameter/resolution_downsampling = 1.0
-shader_parameter/bit_depth = 20.0
+shader_parameter/bit_depth = 40.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_upal2"]
 shader = ExtResource("15_upal2")
-shader_parameter/interlacing_speed = 125.0
+shader_parameter/interlacing_speed = 100.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cgyby"]
 blend_mode = 1
@@ -111,6 +111,7 @@ audio_noise = NodePath("AudioNoise")
 
 [node name="ExternalViewTexture" type="TextureRect" parent="."]
 texture_filter = 1
+anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("ViewportTexture_q54bb")
@@ -141,6 +142,7 @@ anchor_mode = 0
 
 [node name="WorldRenderTexture" type="TextureRect" parent="ExternalView/InternalRender"]
 texture_filter = 1
+anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
 texture = SubResource("ViewportTexture_feaeh")
@@ -185,6 +187,7 @@ anchor_mode = 0
 
 [node name="UIRenderTexture" type="TextureRect" parent="ExternalView/InternalUI"]
 texture_filter = 1
+anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
 texture = SubResource("ViewportTexture_55h7k")
@@ -201,6 +204,7 @@ strength_curve = SubResource("Curve_qfd8n")
 
 [node name="InternalRenderTexture" type="TextureRect" parent="ExternalView"]
 texture_filter = 1
+anchors_preset = -1
 offset_right = 512.0
 offset_bottom = 512.0
 texture = SubResource("ViewportTexture_5gso0")
@@ -209,11 +213,13 @@ script = ExtResource("6_lflnl")
 [node name="GameFade" type="ColorRect" parent="ExternalView"]
 visible = false
 material = SubResource("CanvasItemMaterial_55h7k")
+anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_ketex")
 
 [node name="InternalUITexture" type="TextureRect" parent="ExternalView"]
+anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("ViewportTexture_qo7a3")
@@ -222,12 +228,12 @@ script = ExtResource("6_lflnl")
 [node name="ScreenFade" type="ColorRect" parent="ExternalView"]
 visible = false
 material = SubResource("CanvasItemMaterial_el8aa")
+anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_ketex")
 
 [node name="Dither" type="BackBufferCopy" parent="ExternalView"]
-visible = false
 texture_filter = 1
 position = Vector2(480, 360)
 scale = Vector2(4.8, 3.6)
@@ -236,7 +242,7 @@ script = ExtResource("4_q27tj")
 
 [node name="ColorRect" type="ColorRect" parent="ExternalView/Dither"]
 material = SubResource("ShaderMaterial_8fpr5")
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -100.0
@@ -256,7 +262,7 @@ script = ExtResource("4_q27tj")
 
 [node name="ColorRect" type="ColorRect" parent="ExternalView/Interlace"]
 material = SubResource("ShaderMaterial_upal2")
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -100.0
@@ -267,42 +273,41 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Red Noise" type="TextureRect" parent="ExternalView"]
-visible = false
 modulate = Color(1, 0, 0, 1)
 self_modulate = Color(0.02, 0.02, 0.02, 1)
 material = SubResource("CanvasItemMaterial_cgyby")
+anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("NoiseTexture2D_cgyby")
 flip_h = true
 script = ExtResource("11_cgyby")
-metadata/_custom_type_script = ExtResource("6_lflnl")
+metadata/_custom_type_script = "uid://dghlbpl3qp1a7"
 
 [node name="Green Noise" type="TextureRect" parent="ExternalView"]
-visible = false
 modulate = Color(0, 1, 0, 1)
 self_modulate = Color(0.02, 0.02, 0.02, 1)
 material = SubResource("CanvasItemMaterial_cgyby")
+anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("NoiseTexture2D_cgyby")
 script = ExtResource("6_lflnl")
-metadata/_custom_type_script = ExtResource("6_lflnl")
+metadata/_custom_type_script = "uid://dghlbpl3qp1a7"
 
 [node name="Blue Noise" type="TextureRect" parent="ExternalView"]
-visible = false
 modulate = Color(0, 0, 1, 1)
 self_modulate = Color(0.02, 0.02, 0.02, 1)
 material = SubResource("CanvasItemMaterial_cgyby")
+anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("NoiseTexture2D_cgyby")
 flip_v = true
 script = ExtResource("6_lflnl")
-metadata/_custom_type_script = ExtResource("6_lflnl")
+metadata/_custom_type_script = "uid://dghlbpl3qp1a7"
 
 [node name="Colorbleed" type="BackBufferCopy" parent="."]
-visible = false
 position = Vector2(720, 540)
 scale = Vector2(7.2, 5.4)
 copy_mode = 2
@@ -310,7 +315,7 @@ script = ExtResource("6_33a2k")
 
 [node name="ColorRect" type="ColorRect" parent="Colorbleed"]
 material = SubResource("ShaderMaterial_n6x0k")
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -100.0
@@ -321,12 +326,12 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sharpen" type="BackBufferCopy" parent="."]
-visible = false
 copy_mode = 2
 script = ExtResource("6_33a2k")
 
 [node name="ColorRect" type="ColorRect" parent="Sharpen"]
 material = SubResource("ShaderMaterial_3pho6")
+anchors_preset = -1
 offset_left = -100.0
 offset_top = -100.0
 offset_right = 100.0

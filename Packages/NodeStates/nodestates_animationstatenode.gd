@@ -55,7 +55,7 @@ func clear_event_track(cancel_events := false):
 	event_indices.clear()
 
 func play(transition_time = -1.0):
-	get_parent().animation_player.play(animation_name, transition_time, time_scale)
+	get_parent().animation_player.play(animation_name, transition_time)
 
 func disable_event(event : AnimationStateEvent):
 	if event.state_index >= 0 && event.state_index < event_indices.size():
@@ -70,6 +70,9 @@ func enable_event(event : AnimationStateEvent):
 			"method": "emit_event_signal",
 			"args": [event.event_called, true]
 		})
+
+func process_state(_delta: float) -> void:
+	get_parent().animation_player.speed_scale = time_scale
 
 func get_animation_position() -> float:
 	if is_active():

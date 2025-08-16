@@ -4,8 +4,9 @@ var voices : PackedStringArray
 var tts_occupied := false
 
 func _ready():
-	voices = DisplayServer.tts_get_voices_for_language("en")
-	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, Callable(self, "speaking_finished"))
+	pass
+	#voices = DisplayServer.tts_get_voices_for_language("en")
+	#DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, Callable(self, "speaking_finished"))
 
 func talk(voice: int, text := "THIS LINE IS EMPTY", pitch := 1.0, speed := 1.0, volume := 50, interrupt := false):
 	var should_speak := interrupt || !tts_occupied

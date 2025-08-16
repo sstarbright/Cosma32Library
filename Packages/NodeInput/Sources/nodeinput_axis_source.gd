@@ -29,9 +29,11 @@ func _ready():
 	if bias > 0:
 		contribution_max = 1.0
 		contribution_min = 0.0
+		direction = 1.0
 	else:
 		contribution_max = 0.0
 		contribution_min = -1.0
+		direction = -1.0
 		
 	match contribution:
 		InputAxisContribution.X_OR_UP:
