@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dusdkjr3duamx"]
+[gd_scene load_steps=38 format=3 uid="uid://dusdkjr3duamx"]
 
 [ext_resource type="Script" uid="uid://4ycmbldgr1s5" path="res://Cosma32Library/Post Processing/PostProcessScene.gd" id="1_68cxu"]
 [ext_resource type="Script" uid="uid://bqtycnp0aawf3" path="res://Cosma32Library/Post Processing/AccMotionBlurEffect.gd" id="1_qbjnv"]
@@ -15,7 +15,6 @@
 [ext_resource type="Script" uid="uid://bj23afxm6mea8" path="res://Cosma32Library/Post Processing/ScreenFadeEffect.gd" id="9_ketex"]
 [ext_resource type="Script" uid="uid://d24a4n14jxubh" path="res://Cosma32Library/Post Processing/pp_noise.gd" id="11_cgyby"]
 [ext_resource type="AudioStream" uid="uid://bfyl3wqjmg5wo" path="res://Cosma32Library/Post Processing/analog_noise_b.wav" id="15_4647m"]
-[ext_resource type="Shader" uid="uid://b7l5b4aowfvil" path="res://Cosma32Library/Post Processing/post_process_interlace.gdshader" id="15_upal2"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_q54bb"]
 viewport_path = NodePath("ExternalView")
@@ -68,11 +67,7 @@ blend_mode = 2
 shader = ExtResource("3_47hj2")
 shader_parameter/fog_color = Color(0, 0, 0, 1)
 shader_parameter/resolution_downsampling = 1.0
-shader_parameter/bit_depth = 40.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_upal2"]
-shader = ExtResource("15_upal2")
-shader_parameter/interlacing_speed = 100.0
+shader_parameter/bit_depth = 64.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cgyby"]
 blend_mode = 1
@@ -129,10 +124,10 @@ script = ExtResource("3_8ykct")
 [node name="World" type="SubViewport" parent="ExternalView/InternalRender"]
 world_3d = SubResource("World3D_qrgc2")
 snap_2d_transforms_to_pixel = true
+screen_space_aa = 1
 canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
-size = Vector2i(480, 360)
 script = ExtResource("3_8ykct")
 
 [node name="Game" parent="ExternalView/InternalRender/World" instance=ExtResource("2_us2qq")]
@@ -146,6 +141,7 @@ anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
 texture = SubResource("ViewportTexture_feaeh")
+script = ExtResource("6_lflnl")
 
 [node name="AccumulationBlur" type="TextureRect" parent="ExternalView/InternalRender"]
 visible = false
@@ -167,6 +163,7 @@ script = ExtResource("3_8ykct")
 world_3d = SubResource("World3D_55h7k")
 transparent_bg = true
 snap_2d_transforms_to_pixel = true
+screen_space_aa = 1
 canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
@@ -234,6 +231,7 @@ offset_bottom = 40.0
 script = ExtResource("9_ketex")
 
 [node name="Dither" type="BackBufferCopy" parent="ExternalView"]
+visible = false
 texture_filter = 1
 position = Vector2(480, 360)
 scale = Vector2(4.8, 3.6)
@@ -242,26 +240,6 @@ script = ExtResource("4_q27tj")
 
 [node name="ColorRect" type="ColorRect" parent="ExternalView/Dither"]
 material = SubResource("ShaderMaterial_8fpr5")
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -100.0
-offset_right = -100.0
-offset_bottom = -100.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Interlace" type="BackBufferCopy" parent="ExternalView"]
-visible = false
-texture_filter = 1
-position = Vector2(480, 360)
-scale = Vector2(4.8, 3.6)
-copy_mode = 2
-script = ExtResource("4_q27tj")
-
-[node name="ColorRect" type="ColorRect" parent="ExternalView/Interlace"]
-material = SubResource("ShaderMaterial_upal2")
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
