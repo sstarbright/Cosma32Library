@@ -1,11 +1,10 @@
-[gd_scene load_steps=38 format=3 uid="uid://dusdkjr3duamx"]
+[gd_scene load_steps=40 format=3 uid="uid://dusdkjr3duamx"]
 
 [ext_resource type="Script" uid="uid://4ycmbldgr1s5" path="res://Cosma32Library/Post Processing/PostProcessScene.gd" id="1_68cxu"]
 [ext_resource type="Script" uid="uid://bqtycnp0aawf3" path="res://Cosma32Library/Post Processing/AccMotionBlurEffect.gd" id="1_qbjnv"]
 [ext_resource type="Script" uid="uid://kejlg8ah0quu" path="res://Cosma32Library/Post Processing/AddTexToExtRes.gd" id="2_36755"]
 [ext_resource type="PackedScene" uid="uid://bthc41hntqp5b" path="res://Cosma32Library/Post Processing/Game.tscn" id="2_us2qq"]
 [ext_resource type="Script" uid="uid://dgue8fr33wcwu" path="res://Cosma32Library/Post Processing/AddSubToIntRes.gd" id="3_8ykct"]
-[ext_resource type="Shader" uid="uid://pats4iyoj6si" path="res://Cosma32Library/Post Processing/post_process_dither.gdshader" id="3_47hj2"]
 [ext_resource type="Script" uid="uid://ydwwat3bs3e" path="res://Cosma32Library/Post Processing/AddBuffToIntRes.gd" id="4_q27tj"]
 [ext_resource type="Shader" uid="uid://car7weolixr2" path="res://Cosma32Library/Post Processing/post_process_colorbleed.tres" id="5_h5mi0"]
 [ext_resource type="PackedScene" uid="uid://087yg0mrxdmu" path="res://Cosma32Library/Post Processing/UI.tscn" id="6_3u1c7"]
@@ -13,7 +12,9 @@
 [ext_resource type="Script" uid="uid://dghlbpl3qp1a7" path="res://Cosma32Library/Post Processing/AddTexToIntRes.gd" id="6_lflnl"]
 [ext_resource type="Shader" uid="uid://blqvonajgihgc" path="res://Cosma32Library/Post Processing/post_process_sharpen.tres" id="6_pyg2y"]
 [ext_resource type="Script" uid="uid://bj23afxm6mea8" path="res://Cosma32Library/Post Processing/ScreenFadeEffect.gd" id="9_ketex"]
+[ext_resource type="Shader" uid="uid://bbvorc7olvkek" path="res://Cosma32Library/Post Processing/post_process_rdp.gdshader" id="10_4647m"]
 [ext_resource type="Script" uid="uid://d24a4n14jxubh" path="res://Cosma32Library/Post Processing/pp_noise.gd" id="11_cgyby"]
+[ext_resource type="Shader" uid="uid://buuaus2e6is7h" path="res://Cosma32Library/Post Processing/post_process_vi.gdshader" id="11_upal2"]
 [ext_resource type="AudioStream" uid="uid://bfyl3wqjmg5wo" path="res://Cosma32Library/Post Processing/analog_noise_b.wav" id="15_4647m"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_q54bb"]
@@ -64,10 +65,15 @@ viewport_path = NodePath("ExternalView/InternalUI")
 blend_mode = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8fpr5"]
-shader = ExtResource("3_47hj2")
-shader_parameter/fog_color = Color(0, 0, 0, 1)
-shader_parameter/resolution_downsampling = 1.0
-shader_parameter/bit_depth = 64.0
+shader = ExtResource("10_4647m")
+shader_parameter/dither_mode = 0
+shader_parameter/enable_dither = true
+shader_parameter/random_dither_animate = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4647m"]
+shader = ExtResource("11_upal2")
+shader_parameter/enable_dither_filter = false
+shader_parameter/enable_horizontal_blur = true
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cgyby"]
 blend_mode = 1
@@ -97,7 +103,7 @@ world_motion_blur = NodePath("ExternalView/InternalRender/AccumulationBlur")
 ui_motion_blur = NodePath("ExternalView/InternalUI/AccumulationBlur")
 game_fade_filter = NodePath("ExternalView/GameFade")
 screen_fade_filter = NodePath("ExternalView/ScreenFade")
-dither_filter = NodePath("ExternalView/Dither")
+dither_filter = NodePath("ExternalView/RDP")
 color_bleed_filter = NodePath("Colorbleed")
 sharpen_filter = NodePath("Sharpen")
 game_layer = NodePath("ExternalView/InternalRender/World/Game")
@@ -223,23 +229,40 @@ texture = SubResource("ViewportTexture_qo7a3")
 script = ExtResource("6_lflnl")
 
 [node name="ScreenFade" type="ColorRect" parent="ExternalView"]
-visible = false
 material = SubResource("CanvasItemMaterial_el8aa")
 anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_ketex")
 
-[node name="Dither" type="BackBufferCopy" parent="ExternalView"]
-visible = false
+[node name="RDP" type="BackBufferCopy" parent="ExternalView"]
 texture_filter = 1
 position = Vector2(480, 360)
 scale = Vector2(4.8, 3.6)
 copy_mode = 2
 script = ExtResource("4_q27tj")
 
-[node name="ColorRect" type="ColorRect" parent="ExternalView/Dither"]
+[node name="ColorRect" type="ColorRect" parent="ExternalView/RDP"]
 material = SubResource("ShaderMaterial_8fpr5")
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = -100.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VI" type="BackBufferCopy" parent="ExternalView"]
+texture_filter = 1
+position = Vector2(480, 360)
+scale = Vector2(4.8, 3.6)
+copy_mode = 2
+script = ExtResource("4_q27tj")
+
+[node name="ColorRect" type="ColorRect" parent="ExternalView/VI"]
+material = SubResource("ShaderMaterial_4647m")
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -320,3 +343,5 @@ stream = ExtResource("15_4647m")
 volume_db = -20.486
 autoplay = true
 bus = &"Noise"
+
+[connection signal="ready" from="ExternalView/ScreenFade" to="ExternalView/ScreenFade" method="fade_in" binds= [2.0, 2]]

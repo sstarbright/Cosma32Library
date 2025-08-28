@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bthc41hntqp5b"]
 
 [ext_resource type="Script" uid="uid://bdx4nvr5ru5u6" path="res://Cosma32Library/Post Processing/GameLayer.gd" id="1_l5hbx"]
-[ext_resource type="PackedScene" uid="uid://bat5504gcyf8m" path="res://Scenes/drill/drill_test.tscn" id="2_n8ega"]
+[ext_resource type="PackedScene" uid="uid://ll67f8vqmsoh" path="res://Scenes/drill/SCNEngine.tscn" id="2_n8ega"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_l5hbx")
