@@ -1,0 +1,26 @@
+shader_type spatial;
+render_mode vertex_lighting, diffuse_lambert, cull_disabled, shadows_disabled;
+
+#include "3_point.gdshaderinc"
+
+uniform sampler2D albedo : source_color, hint_default_white, repeat_disable, filter_nearest;
+uniform bvec2 repeat_albedo = bvec2(true, true);
+uniform vec2 albedo_scale = vec2(1.0, 1.0);
+uniform float cutout_level = 0.0f;
+uniform vec3 color : source_color = vec3(1.0f,1.0f,1.0f);
+
+void vertex() {
+	COLOR = clamp(COLOR, vec4(0.0, 0.0, 0.0, 0.0), vec4(1.0, 1.0, 1.0, 1.0));
+}
+
+void fragment() {
+	vec4 tex_sample = texture_3point(albedo, UV*albedo_scale, false, repeat_albedo);
+	if (tex_sample.a < cutout_level)
+		discard;
+	ALBEDO.rgb = tex_sample.rgb*COLOR.rgb*color;
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the material.
+//	// Uncomment to replace the default light processing function with this one.
+//}

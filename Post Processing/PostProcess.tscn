@@ -15,7 +15,7 @@
 [ext_resource type="Shader" uid="uid://bbvorc7olvkek" path="res://Cosma32Library/Post Processing/post_process_rdp.gdshader" id="10_4647m"]
 [ext_resource type="Shader" uid="uid://buuaus2e6is7h" path="res://Cosma32Library/Post Processing/post_process_vi.gdshader" id="11_upal2"]
 [ext_resource type="Script" uid="uid://2iuj6vnpvn1f" path="res://Cosma32Library/Post Processing/pp_chroma_noise.gd" id="13_5xays"]
-[ext_resource type="AudioStream" uid="uid://bfyl3wqjmg5wo" path="res://Cosma32Library/Post Processing/analog_noise_b.wav" id="15_4647m"]
+[ext_resource type="AudioStream" uid="uid://blxh8t88ppgvw" path="res://Cosma32Library/Post Processing/analog_noise_b.wav" id="15_4647m"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_q54bb"]
 viewport_path = NodePath("ExternalView")
@@ -359,7 +359,5 @@ offset_bottom = 100.0
 [node name="AudioNoise" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_4647m")
 volume_db = -5.33
-autoplay = true
-bus = &"Noise"
 
 [connection signal="ready" from="ExternalView/ScreenFade" to="ExternalView/ScreenFade" method="fade_in" binds= [2.0, 2]]
