@@ -282,6 +282,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ChromaNoise" type="Control" parent="ExternalView"]
+modulate = Color(0.37791896, 0.37791884, 0.37791884, 1)
 layout_mode = 3
 offset_right = 40.0
 offset_bottom = 40.0
@@ -360,4 +361,4 @@ offset_bottom = 100.0
 stream = ExtResource("15_4647m")
 volume_db = -5.33
 
-[connection signal="ready" from="ExternalView/ScreenFade" to="ExternalView/ScreenFade" method="fade_in" binds= [2.0, 2]]
+[connection signal="ready" from="ExternalView/ScreenFade" to="ExternalView/ScreenFade" method="fade_in" binds= [0.5, 2]]
