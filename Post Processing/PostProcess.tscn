@@ -115,6 +115,7 @@ texture_filter = 1
 anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 texture = SubResource("ViewportTexture_q54bb")
 script = ExtResource("2_36755")
 
@@ -148,6 +149,7 @@ texture_filter = 1
 anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
+mouse_filter = 2
 texture = SubResource("ViewportTexture_feaeh")
 script = ExtResource("6_lflnl")
 
@@ -155,6 +157,7 @@ script = ExtResource("6_lflnl")
 visible = false
 modulate = Color(1, 1, 1, 0)
 texture_filter = 1
+mouse_filter = 2
 texture = SubResource("ImageTexture_s3dgy")
 script = ExtResource("1_qbjnv")
 viewport_texture = SubResource("ViewportTexture_feaeh")
@@ -163,6 +166,7 @@ strength_curve = SubResource("Curve_qfd8n")
 
 [node name="InternalUI" type="SubViewport" parent="ExternalView"]
 transparent_bg = true
+handle_input_locally = false
 screen_space_aa = 1
 canvas_item_default_texture_filter = 0
 script = ExtResource("3_8ykct")
@@ -170,6 +174,7 @@ script = ExtResource("3_8ykct")
 [node name="World" type="SubViewport" parent="ExternalView/InternalUI"]
 world_3d = SubResource("World3D_55h7k")
 transparent_bg = true
+handle_input_locally = false
 snap_2d_transforms_to_pixel = true
 screen_space_aa = 1
 canvas_item_default_texture_filter = 0
@@ -195,12 +200,14 @@ texture_filter = 1
 anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
+mouse_filter = 2
 texture = SubResource("ViewportTexture_55h7k")
 
 [node name="AccumulationBlur" type="TextureRect" parent="ExternalView/InternalUI"]
 visible = false
 modulate = Color(1, 1, 1, 0)
 texture_filter = 1
+mouse_filter = 2
 texture = SubResource("ImageTexture_55h7k")
 script = ExtResource("1_qbjnv")
 viewport_texture = SubResource("ViewportTexture_ketex")
@@ -212,6 +219,7 @@ texture_filter = 1
 anchors_preset = -1
 offset_right = 512.0
 offset_bottom = 512.0
+mouse_filter = 2
 texture = SubResource("ViewportTexture_5gso0")
 script = ExtResource("6_lflnl")
 
@@ -221,12 +229,14 @@ material = SubResource("CanvasItemMaterial_55h7k")
 anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("9_ketex")
 
 [node name="InternalUITexture" type="TextureRect" parent="ExternalView"]
 anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 texture = SubResource("ViewportTexture_qo7a3")
 script = ExtResource("6_lflnl")
 
@@ -236,12 +246,14 @@ material = SubResource("CanvasItemMaterial_el8aa")
 anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("9_ketex")
 
 [node name="N64Filter" type="Control" parent="ExternalView"]
 layout_mode = 3
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="RDP" type="BackBufferCopy" parent="ExternalView/N64Filter"]
 texture_filter = 1
@@ -261,6 +273,7 @@ offset_right = -100.0
 offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="VI" type="BackBufferCopy" parent="ExternalView/N64Filter"]
 texture_filter = 1
@@ -280,12 +293,14 @@ offset_right = -100.0
 offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ChromaNoise" type="Control" parent="ExternalView"]
 modulate = Color(0.37791896, 0.37791884, 0.37791884, 1)
 layout_mode = 3
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("13_5xays")
 noise = SubResource("FastNoiseLite_4f31f")
 
@@ -297,6 +312,7 @@ layout_mode = 1
 anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
+mouse_filter = 2
 texture = SubResource("NoiseTexture2D_cgyby")
 flip_h = true
 script = ExtResource("6_lflnl")
@@ -310,6 +326,7 @@ layout_mode = 1
 anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
+mouse_filter = 2
 texture = SubResource("NoiseTexture2D_cgyby")
 script = ExtResource("6_lflnl")
 metadata/_custom_type_script = "uid://dghlbpl3qp1a7"
@@ -322,6 +339,7 @@ layout_mode = 1
 anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
+mouse_filter = 2
 texture = SubResource("NoiseTexture2D_cgyby")
 flip_v = true
 script = ExtResource("6_lflnl")
@@ -344,6 +362,7 @@ offset_right = -100.0
 offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Sharpen" type="BackBufferCopy" parent="."]
 copy_mode = 2
@@ -356,9 +375,10 @@ offset_left = -100.0
 offset_top = -100.0
 offset_right = 100.0
 offset_bottom = 100.0
+mouse_filter = 2
 
 [node name="AudioNoise" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_4647m")
 volume_db = -5.33
 
-[connection signal="ready" from="ExternalView/ScreenFade" to="ExternalView/ScreenFade" method="fade_in" binds= [0.5, 2]]
+[connection signal="ready" from="ExternalView/ScreenFade" to="ExternalView/ScreenFade" method="fade_in" binds= [1.0, 2]]
