@@ -5,8 +5,8 @@ extends Node2D
 @export var ui_motion_blur : AccMotionBlurEffect
 @export var game_fade_filter : ScreenFadeEffect
 @export var screen_fade_filter : ScreenFadeEffect
-@export var dither_filter : BackBufferCopy
-@export var color_bleed_filter : BackBufferCopy
+@export var rdp_vi_filter : Control
+@export var chroma_smear_filter : BackBufferCopy
 @export var sharpen_filter : BackBufferCopy
 @export var game_layer : GameLayer
 @export var ui_layer : UILayer

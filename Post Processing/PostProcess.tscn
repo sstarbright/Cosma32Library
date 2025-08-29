@@ -13,8 +13,8 @@
 [ext_resource type="Shader" uid="uid://blqvonajgihgc" path="res://Cosma32Library/Post Processing/post_process_sharpen.tres" id="6_pyg2y"]
 [ext_resource type="Script" uid="uid://bj23afxm6mea8" path="res://Cosma32Library/Post Processing/ScreenFadeEffect.gd" id="9_ketex"]
 [ext_resource type="Shader" uid="uid://bbvorc7olvkek" path="res://Cosma32Library/Post Processing/post_process_rdp.gdshader" id="10_4647m"]
-[ext_resource type="Script" uid="uid://d24a4n14jxubh" path="res://Cosma32Library/Post Processing/pp_noise.gd" id="11_cgyby"]
 [ext_resource type="Shader" uid="uid://buuaus2e6is7h" path="res://Cosma32Library/Post Processing/post_process_vi.gdshader" id="11_upal2"]
+[ext_resource type="Script" uid="uid://2iuj6vnpvn1f" path="res://Cosma32Library/Post Processing/pp_chroma_noise.gd" id="13_5xays"]
 [ext_resource type="AudioStream" uid="uid://bfyl3wqjmg5wo" path="res://Cosma32Library/Post Processing/analog_noise_b.wav" id="15_4647m"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_q54bb"]
@@ -75,12 +75,12 @@ shader = ExtResource("11_upal2")
 shader_parameter/enable_dither_filter = false
 shader_parameter/enable_horizontal_blur = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cgyby"]
-blend_mode = 1
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_4f31f"]
 frequency = 0.1301
 fractal_type = 0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cgyby"]
+blend_mode = 1
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cgyby"]
 width = 480
@@ -95,16 +95,16 @@ shader_parameter/bottom_strenth = 3.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3pho6"]
 shader = ExtResource("6_pyg2y")
-shader_parameter/sharpen_amount = 0.3
+shader_parameter/sharpen_amount = 0.30000001425
 
-[node name="PostProcess" type="Node2D" node_paths=PackedStringArray("world_motion_blur", "ui_motion_blur", "game_fade_filter", "screen_fade_filter", "dither_filter", "color_bleed_filter", "sharpen_filter", "game_layer", "ui_layer", "audio_noise")]
+[node name="PostProcess" type="Node2D" node_paths=PackedStringArray("world_motion_blur", "ui_motion_blur", "game_fade_filter", "screen_fade_filter", "rdp_vi_filter", "chroma_smear_filter", "sharpen_filter", "game_layer", "ui_layer", "audio_noise")]
 script = ExtResource("1_68cxu")
 world_motion_blur = NodePath("ExternalView/InternalRender/AccumulationBlur")
 ui_motion_blur = NodePath("ExternalView/InternalUI/AccumulationBlur")
 game_fade_filter = NodePath("ExternalView/GameFade")
 screen_fade_filter = NodePath("ExternalView/ScreenFade")
-dither_filter = NodePath("ExternalView/RDP")
-color_bleed_filter = NodePath("Colorbleed")
+rdp_vi_filter = NodePath("ExternalView/N64Filter")
+chroma_smear_filter = NodePath("ChromaSmear")
 sharpen_filter = NodePath("Sharpen")
 game_layer = NodePath("ExternalView/InternalRender/World/Game")
 ui_layer = NodePath("ExternalView/InternalUI/World/UI")
@@ -120,11 +120,13 @@ script = ExtResource("2_36755")
 
 [node name="ExternalView" type="SubViewport" parent="."]
 disable_3d = true
+canvas_item_default_texture_filter = 0
 script = ExtResource("3_8ykct")
 
 [node name="InternalRender" type="SubViewport" parent="ExternalView"]
 disable_3d = true
 snap_2d_transforms_to_pixel = true
+canvas_item_default_texture_filter = 0
 script = ExtResource("3_8ykct")
 
 [node name="World" type="SubViewport" parent="ExternalView/InternalRender"]
@@ -161,8 +163,8 @@ strength_curve = SubResource("Curve_qfd8n")
 
 [node name="InternalUI" type="SubViewport" parent="ExternalView"]
 transparent_bg = true
-msaa_3d = 1
 screen_space_aa = 1
+canvas_item_default_texture_filter = 0
 script = ExtResource("3_8ykct")
 
 [node name="World" type="SubViewport" parent="ExternalView/InternalUI"]
@@ -229,20 +231,26 @@ texture = SubResource("ViewportTexture_qo7a3")
 script = ExtResource("6_lflnl")
 
 [node name="ScreenFade" type="ColorRect" parent="ExternalView"]
+visible = false
 material = SubResource("CanvasItemMaterial_el8aa")
 anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_ketex")
 
-[node name="RDP" type="BackBufferCopy" parent="ExternalView"]
+[node name="N64Filter" type="Control" parent="ExternalView"]
+layout_mode = 3
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RDP" type="BackBufferCopy" parent="ExternalView/N64Filter"]
 texture_filter = 1
 position = Vector2(480, 360)
 scale = Vector2(4.8, 3.6)
 copy_mode = 2
 script = ExtResource("4_q27tj")
 
-[node name="ColorRect" type="ColorRect" parent="ExternalView/RDP"]
+[node name="ColorRect" type="ColorRect" parent="ExternalView/N64Filter/RDP"]
 material = SubResource("ShaderMaterial_8fpr5")
 anchors_preset = -1
 anchor_right = 1.0
@@ -254,14 +262,14 @@ offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VI" type="BackBufferCopy" parent="ExternalView"]
+[node name="VI" type="BackBufferCopy" parent="ExternalView/N64Filter"]
 texture_filter = 1
 position = Vector2(480, 360)
 scale = Vector2(4.8, 3.6)
 copy_mode = 2
 script = ExtResource("4_q27tj")
 
-[node name="ColorRect" type="ColorRect" parent="ExternalView/VI"]
+[node name="ColorRect" type="ColorRect" parent="ExternalView/N64Filter/VI"]
 material = SubResource("ShaderMaterial_4647m")
 anchors_preset = -1
 anchor_right = 1.0
@@ -273,48 +281,58 @@ offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Red Noise" type="TextureRect" parent="ExternalView"]
+[node name="ChromaNoise" type="Control" parent="ExternalView"]
+layout_mode = 3
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("13_5xays")
+noise = SubResource("FastNoiseLite_4f31f")
+
+[node name="RedNoise" type="TextureRect" parent="ExternalView/ChromaNoise"]
 modulate = Color(1, 0, 0, 1)
 self_modulate = Color(0.02, 0.02, 0.02, 1)
 material = SubResource("CanvasItemMaterial_cgyby")
+layout_mode = 1
 anchors_preset = -1
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 480.0
+offset_bottom = 360.0
 texture = SubResource("NoiseTexture2D_cgyby")
 flip_h = true
-script = ExtResource("11_cgyby")
+script = ExtResource("6_lflnl")
 metadata/_custom_type_script = "uid://dghlbpl3qp1a7"
 
-[node name="Green Noise" type="TextureRect" parent="ExternalView"]
+[node name="GreenNoise" type="TextureRect" parent="ExternalView/ChromaNoise"]
 modulate = Color(0, 1, 0, 1)
 self_modulate = Color(0.02, 0.02, 0.02, 1)
 material = SubResource("CanvasItemMaterial_cgyby")
+layout_mode = 1
 anchors_preset = -1
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 480.0
+offset_bottom = 360.0
 texture = SubResource("NoiseTexture2D_cgyby")
 script = ExtResource("6_lflnl")
 metadata/_custom_type_script = "uid://dghlbpl3qp1a7"
 
-[node name="Blue Noise" type="TextureRect" parent="ExternalView"]
+[node name="BlueNoise" type="TextureRect" parent="ExternalView/ChromaNoise"]
 modulate = Color(0, 0, 1, 1)
 self_modulate = Color(0.02, 0.02, 0.02, 1)
 material = SubResource("CanvasItemMaterial_cgyby")
+layout_mode = 1
 anchors_preset = -1
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 480.0
+offset_bottom = 360.0
 texture = SubResource("NoiseTexture2D_cgyby")
 flip_v = true
 script = ExtResource("6_lflnl")
 metadata/_custom_type_script = "uid://dghlbpl3qp1a7"
 
-[node name="Colorbleed" type="BackBufferCopy" parent="."]
+[node name="ChromaSmear" type="BackBufferCopy" parent="."]
 position = Vector2(720, 540)
 scale = Vector2(7.2, 5.4)
 copy_mode = 2
 script = ExtResource("6_33a2k")
 
-[node name="ColorRect" type="ColorRect" parent="Colorbleed"]
+[node name="ColorRect" type="ColorRect" parent="ChromaSmear"]
 material = SubResource("ShaderMaterial_n6x0k")
 anchors_preset = -1
 anchor_right = 1.0
@@ -340,7 +358,7 @@ offset_bottom = 100.0
 
 [node name="AudioNoise" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_4647m")
-volume_db = -20.486
+volume_db = -5.33
 autoplay = true
 bus = &"Noise"
 
