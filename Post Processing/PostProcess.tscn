@@ -381,4 +381,4 @@ mouse_filter = 2
 stream = ExtResource("15_4647m")
 volume_db = -5.33
 
-[connection signal="ready" from="ExternalView/ScreenFade" to="ExternalView/ScreenFade" method="fade_in" binds= [1.0, 2]]
+[connection signal="ready" from="ExternalView/ScreenFade" to="ExternalView/ScreenFade" method="fade_in" binds= [2.0, 2]]

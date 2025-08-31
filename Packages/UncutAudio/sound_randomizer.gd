@@ -11,5 +11,6 @@ func get_sound():
 	return sounds[AudioManager.random.randi_range(0, sounds.size()-1)]
 
 func random():
-	new_sound.emit(sounds[AudioManager.random.randi_range(0, sounds.size()-1)])
+	if (sounds.size() > 0):
+		new_sound.emit(sounds[AudioManager.random.randi_range(0, sounds.size()-1)])
 	new_pitch.emit(AudioManager.random.randf_range(pitch_min, pitch_max))
