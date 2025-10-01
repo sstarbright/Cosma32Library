@@ -10,10 +10,11 @@ signal visibility_changed_with_state(new_state: bool)
 
 func _ready() -> void:
 	if node_to_follow != null:
-		if relative_to_source_view:
-			global_position = get_viewport().get_camera_3d().project_position(node_to_follow.get_viewport().get_camera_3d().unproject_position(node_to_follow.global_position), get_viewport().get_camera_3d().position.z)
-		else:
-			global_position = node_to_follow.global_position
+		if follow_position:
+			if relative_to_source_view:
+				global_position = get_viewport().get_camera_3d().project_position(node_to_follow.get_viewport().get_camera_3d().unproject_position(node_to_follow.global_position), get_viewport().get_camera_3d().position.z)
+			else:
+				global_position = node_to_follow.global_position
 		if follow_rotation:
 			global_rotation = node_to_follow.global_rotation
 	else:
@@ -30,10 +31,11 @@ func set_node_to_follow(new_follow_node: Node3D):
 
 func update_position():
 	if node_to_follow != null:
-		if relative_to_source_view:
-			global_position = get_viewport().get_camera_3d().project_position(node_to_follow.get_viewport().get_camera_3d().unproject_position(node_to_follow.global_position), get_viewport().get_camera_3d().position.z)
-		else:
-			global_position = node_to_follow.global_position
+		if follow_position:
+			if relative_to_source_view:
+				global_position = get_viewport().get_camera_3d().project_position(node_to_follow.get_viewport().get_camera_3d().unproject_position(node_to_follow.global_position), get_viewport().get_camera_3d().position.z)
+			else:
+				global_position = node_to_follow.global_position
 		if follow_rotation:
 			global_rotation = node_to_follow.global_rotation
 
