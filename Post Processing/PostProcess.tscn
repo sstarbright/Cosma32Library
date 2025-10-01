@@ -15,7 +15,7 @@
 [ext_resource type="Shader" uid="uid://bbvorc7olvkek" path="res://Cosma32Library/Post Processing/post_process_rdp.gdshader" id="10_4647m"]
 [ext_resource type="Shader" uid="uid://buuaus2e6is7h" path="res://Cosma32Library/Post Processing/post_process_vi.gdshader" id="11_upal2"]
 [ext_resource type="Script" uid="uid://2iuj6vnpvn1f" path="res://Cosma32Library/Post Processing/pp_chroma_noise.gd" id="13_5xays"]
-[ext_resource type="AudioStream" uid="uid://blxh8t88ppgvw" path="res://Cosma32Library/Post Processing/analog_noise_b.wav" id="15_4647m"]
+[ext_resource type="AudioStream" uid="uid://bfyl3wqjmg5wo" path="res://Cosma32Library/Post Processing/analog_noise_b.wav" id="15_4647m"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_q54bb"]
 viewport_path = NodePath("ExternalView")
@@ -112,7 +112,6 @@ audio_noise = NodePath("AudioNoise")
 
 [node name="ExternalViewTexture" type="TextureRect" parent="."]
 texture_filter = 1
-anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
@@ -146,7 +145,6 @@ anchor_mode = 0
 
 [node name="WorldRenderTexture" type="TextureRect" parent="ExternalView/InternalRender"]
 texture_filter = 1
-anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
 mouse_filter = 2
@@ -197,7 +195,6 @@ anchor_mode = 0
 
 [node name="UIRenderTexture" type="TextureRect" parent="ExternalView/InternalUI"]
 texture_filter = 1
-anchors_preset = -1
 offset_right = 480.0
 offset_bottom = 360.0
 mouse_filter = 2
@@ -216,7 +213,6 @@ strength_curve = SubResource("Curve_qfd8n")
 
 [node name="InternalRenderTexture" type="TextureRect" parent="ExternalView"]
 texture_filter = 1
-anchors_preset = -1
 offset_right = 512.0
 offset_bottom = 512.0
 mouse_filter = 2
@@ -226,14 +222,12 @@ script = ExtResource("6_lflnl")
 [node name="GameFade" type="ColorRect" parent="ExternalView"]
 visible = false
 material = SubResource("CanvasItemMaterial_55h7k")
-anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("9_ketex")
 
 [node name="InternalUITexture" type="TextureRect" parent="ExternalView"]
-anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
@@ -243,7 +237,6 @@ script = ExtResource("6_lflnl")
 [node name="ScreenFade" type="ColorRect" parent="ExternalView"]
 visible = false
 material = SubResource("CanvasItemMaterial_el8aa")
-anchors_preset = -1
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
@@ -251,6 +244,7 @@ script = ExtResource("9_ketex")
 
 [node name="N64Filter" type="Control" parent="ExternalView"]
 layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
@@ -264,7 +258,7 @@ script = ExtResource("4_q27tj")
 
 [node name="ColorRect" type="ColorRect" parent="ExternalView/N64Filter/RDP"]
 material = SubResource("ShaderMaterial_8fpr5")
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -100.0
@@ -284,7 +278,7 @@ script = ExtResource("4_q27tj")
 
 [node name="ColorRect" type="ColorRect" parent="ExternalView/N64Filter/VI"]
 material = SubResource("ShaderMaterial_4647m")
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -100.0
@@ -298,6 +292,7 @@ mouse_filter = 2
 [node name="ChromaNoise" type="Control" parent="ExternalView"]
 modulate = Color(0.37791896, 0.37791884, 0.37791884, 1)
 layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
@@ -353,7 +348,7 @@ script = ExtResource("6_33a2k")
 
 [node name="ColorRect" type="ColorRect" parent="ChromaSmear"]
 material = SubResource("ShaderMaterial_n6x0k")
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -100.0
@@ -370,7 +365,6 @@ script = ExtResource("6_33a2k")
 
 [node name="ColorRect" type="ColorRect" parent="Sharpen"]
 material = SubResource("ShaderMaterial_3pho6")
-anchors_preset = -1
 offset_left = -100.0
 offset_top = -100.0
 offset_right = 100.0
@@ -380,5 +374,3 @@ mouse_filter = 2
 [node name="AudioNoise" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_4647m")
 volume_db = -5.33
-
-[connection signal="ready" from="ExternalView/ScreenFade" to="ExternalView/ScreenFade" method="fade_in" binds= [2.0, 2]]
