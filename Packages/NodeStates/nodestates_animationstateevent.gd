@@ -17,3 +17,6 @@ func cancel():
 
 func _exit_tree():
 	get_parent().disable_event(self)
+
+func call_event():
+	event_called.emit()
